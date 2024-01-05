@@ -1008,3 +1008,7 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+// "@chakra-ui/toast": "^7.0.2",
+// "@web3modal/wagmi": "^3.5.2",
+// "viem": "^1.21.0",
+// "wagmi": "^1.4.12"

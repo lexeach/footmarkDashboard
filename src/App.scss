@@ -246,30 +246,54 @@ nav {
 
 /* Container 1 */
 .container1 {
-  background-color: #f0f8ff; /* Alice Blue */
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #2653dc; /* Alice Blue */
 }
 
 /* Container 2 */
 .container2 {
-  background-color: #f0ffe0; /* Honeydew */
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #d722e8; /* Honeydew */
 }
 
 /* Container 3 */
 .container3 {
-  background-color: #e0f7fa; /* Light Cyan */
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #3c25ef; /* Light Cyan */
 }
 
 /* Container 4 */
 .container4 {
-  background-color: #c5cae9; /* Blue Grey */
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #e828d2; /* Blue Grey */
 }
 
 /* Container 5 */
 .container5 {
-  background-color: #f3e5f5; /* Lavender */
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #206cee; /* Lavender */
 }
 
 /* Container 6 */
 .container6 {
-  background-color: #b3e0ff; /* Light Steel Blue */
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #b108c0; /* Light Steel Blue */
+}
+
+
+.card-body-reg {
+  border: none;
+  //color: #f3ad23;
+  color: #23f3a0;
+  padding: 1.75rem 1.5625rem;
+  background: #172907cc;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 30px 31px 33px rgb(8 14 35);
 }

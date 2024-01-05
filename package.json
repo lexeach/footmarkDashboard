@@ -4,6 +4,7 @@
   "homepage": "https://roi-dev.netlify.app",
   "private": true,
   "dependencies": {
+    "@chakra-ui/toast": "^7.0.2",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.16",
@@ -11,6 +12,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@web3modal/wagmi": "^3.5.3",
     "abi-decoder": "^2.4.0",
     "assert": "^2.0.0",
     "axios": "^1.2.0",
@@ -33,6 +35,8 @@
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "url": "^0.11.0",
+    "viem": "^2.0.0",
+    "wagmi": "^1.4.13",
     "web-vitals": "^2.1.4",
     "web3": "^1.8.1"
   },
