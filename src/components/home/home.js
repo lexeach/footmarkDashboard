@@ -13,9 +13,12 @@ const Dashboard = () => {
   const [priceDiff, setPriceDiff] = useState();
   const [income, setIncome] = useState();
   const [planer, setPlaner] = useState();
+  const [registerTimeStamp, setRegisterTimeStamp] = useState();
+  const [registerPrice, setRegisterPrice] = useState();
+  const [registerTokenPrice, setRegisterTokenPrice] = useState();
+  const [registerCurrentUserId, setRegisterCurrentUserId] = useState();
 
   const [userList, setUserList] = useState();
-  const [register, setRegister] = useState();
   const [winAmount, setWinAmount] = useState();
   const [regId, setRegId] = useState();
 
@@ -32,6 +35,7 @@ const Dashboard = () => {
   const [pool1Income, setPool1Income] = useState();
   const [pool1UsedIncome, setPool1UsedIncome] = useState();
   const [pool1IncomeBalance, setPool1IncomeBalance] = useState();
+  const [currentDateEpoch, setCurrentDateEpoch] = useState();
 
   const [pool2_price, setPool2_price] = useState();
   const [pool2activeUserID, setPool2activeUserID] = useState();
@@ -59,9 +63,7 @@ const Dashboard = () => {
   const [pool4activeUserID, setPool4activeUserID] = useState();
   const [pool4currUserID, setPool4currUserID] = useState();
   const [pool4userList, setPool4userList] = useState();
-  const [pool4users, setPool4users] = useState();
-  const [pool4Id, setPool4Id] = useState();
-  const [pool4PaymentReceived, setPool4PaymentReceived] = useState();
+
   const [pool4Income, setPool4Income] = useState();
   const [pool4UsedIncome, setPool4UsedIncome] = useState();
   const [pool4IncomeBalance, setPool4IncomeBalance] = useState();
@@ -69,9 +71,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [referrerId, setReferrerId] = useState();
   const [coReferrerId, setCoReferrerId] = useState();
-  const [amount, setAmount] = useState();
 
-  const [pool1Exist, setPool1Exist] = useState();
   const [pool2Exist, setPool2Exist] = useState();
   const [pool3Exist, setPool3Exist] = useState();
   const [pool4Exist, setPool4Exist] = useState();
@@ -95,7 +95,7 @@ const Dashboard = () => {
 
       const convert_regfee = Number(
         web3.utils.fromWei(RegistrationFee, "ether")
-      ).toFixed(2);
+      ).toFixed(4);
       setRegistrationFee(convert_regfee);
       // set Last TopUp:
       let currentID = await NEW_CBC_ROI.methods.currUserID().call();
@@ -125,26 +125,36 @@ const Dashboard = () => {
       //   planer: incomes.planer,
       //   income: incomes.income,
       // };
-      setIncome(incomes.income);
+      setIncome(Number(web3.utils.fromWei(incomes.income, "ether")).toFixed(4));
       setPlaner(incomes.planer);
 
       let registers = await NEW_CBC_ROI.methods.register(accounts[0]).call();
-      let objRegiters = {
-        timeStamp: registers.timeStamp,
-        price: registers.price,
-        currentUserID: registers.currentUserID,
-        tokenPrice: Number(web3.utils.fromWei(tokenPrices, "ether")).toFixed(4),
-        // currentUserID1: currentUserIDs,
-      };
-      setWinAmount(registers.winAmount);
+      // let objRegiters = {
+      //   timeStamp: registers.timeStamp,
+      //   price: registers.price,
+      //   currentUserID: registers.currentUserID,
+      //   tokenPrice: Number(web3.utils.fromWei(tokenPrices, "ether")).toFixed(4),
+      //   // currentUserID1: currentUserIDs,
+      // };
+      setRegisterTimeStamp(await epochToDate(registers.timeStamp));
+      setWinAmount(
+        Number(web3.utils.fromWei(registers.winAmount, "ether")).toFixed(4)
+      );
       setRegId(registers.id);
-      setRegister(objRegiters);
+      setRegisterPrice(
+        Number(web3.utils.fromWei(registers.price, "ether")).toFixed(4)
+      );
+      setRegisterTokenPrice(
+        Number(web3.utils.fromWei(tokenPrices, "ether")).toFixed(4)
+      );
+      setRegisterCurrentUserId(registers.currentUserID);
+      // setRegister(objRegiters);
 
       let userLists = await NEW_CBC_ROI.methods.userList(accounts[0]).call();
       setUserList(userLists);
       let pool1Price = await NEW_CBC_ROI.methods.pool1_price().call();
       setPool1_price(
-        Number(web3.utils.fromWei(pool1Price, "ether")).toFixed(2)
+        Number(web3.utils.fromWei(pool1Price, "ether")).toFixed(4)
       );
 
       let pool1activeUserIDs = await NEW_CBC_ROI.methods
@@ -163,25 +173,28 @@ const Dashboard = () => {
       let pool1userss = await NEW_CBC_ROI.methods
         .pool1users(accounts[0])
         .call();
-      // let objPool1USers = {
-      //   isExist: pool1userss.isExist ? "true" : "false",
-      //   id: pool1userss.id,
-      //   payment_received: pool1userss.payment_received,
-      //   pool1Income: pool1userss.pool1Income,
-      //   usedIncome: pool1userss.usedIncome,
-      //   balanceIncome: pool1userss.balanceIncome,
-      // };
-      setPool1Exist(pool1userss.isExist);
-      // setPool1users(objPool1USers);
+
       setPool1Id(pool1userss.id);
-      setPool1PaymentReceived(pool1userss.payment_received);
-      setPool1Income(pool1userss.pool1Income);
-      setPool1UsedIncome(pool1userss.usedIncome);
-      setPool1IncomeBalance(pool1userss.balanceIncome);
+      setPool1PaymentReceived(
+        Number(
+          web3.utils.fromWei(pool1userss.payment_received, "ether")
+        ).toFixed(4)
+      );
+      setPool1Income(
+        Number(web3.utils.fromWei(pool1userss.pool1Income, "ether")).toFixed(4)
+      );
+      setPool1UsedIncome(
+        Number(web3.utils.fromWei(pool1userss.usedIncome, "ether")).toFixed(4)
+      );
+      setPool1IncomeBalance(
+        Number(web3.utils.fromWei(pool1userss.balanceIncome, "ether")).toFixed(
+          4
+        )
+      );
 
       let pool2Price = await NEW_CBC_ROI.methods.pool2_price().call();
       setPool2_price(
-        Number(web3.utils.fromWei(pool2Price, "ether")).toFixed(2)
+        Number(web3.utils.fromWei(pool2Price, "ether")).toFixed(4)
       );
 
       let pool2activeUserIDs = await NEW_CBC_ROI.methods
@@ -200,25 +213,28 @@ const Dashboard = () => {
       let pool2userss = await NEW_CBC_ROI.methods
         .pool2users(accounts[0])
         .call();
-      // let objPool2USers = {
-      //   isExist: pool2userss.isExist ? "true" : "false",
-      //   id: pool2userss.id,
-      //   payment_received: pool2userss.payment_received,
-      //   pool2Income: pool2userss.pool2Income,
-      //   usedIncome: pool2userss.usedIncome,
-      //   balanceIncome: pool2userss.balanceIncome,
-      // };
       setPool2Exist(pool2userss.isExist);
-      // setPool2users(objPool2USers);
       setPool2Id(pool2userss.id);
-      setPool2PaymentReceived(pool2userss.payment_received);
-      setPool2Income(pool2userss.pool2Income);
-      setPool2UsedIncome(pool2userss.usedIncome);
-      setPool2IncomeBalance(pool2userss.balanceIncome);
+      setPool2PaymentReceived(
+        Number(
+          web3.utils.fromWei(pool2userss.payment_received, "ether")
+        ).toFixed(4)
+      );
+      setPool2Income(
+        Number(web3.utils.fromWei(pool2userss.pool2Income, "ether")).toFixed(4)
+      );
+      setPool2UsedIncome(
+        Number(web3.utils.fromWei(pool2userss.usedIncome, "ether")).toFixed(4)
+      );
+      setPool2IncomeBalance(
+        Number(web3.utils.fromWei(pool2userss.balanceIncome, "ether")).toFixed(
+          4
+        )
+      );
 
       let pool3Price = await NEW_CBC_ROI.methods.pool3_price().call();
       setPool3_price(
-        Number(web3.utils.fromWei(pool3Price, "ether")).toFixed(2)
+        Number(web3.utils.fromWei(pool3Price, "ether")).toFixed(4)
       );
 
       let pool3activeUserIDs = await NEW_CBC_ROI.methods
@@ -237,33 +253,33 @@ const Dashboard = () => {
       let pool3userss = await NEW_CBC_ROI.methods
         .pool3users(accounts[0])
         .call();
-      // let objPool3USers = {
-      //   isExist: pool3userss.isExist ? "true" : "false",
-      //   id: pool3userss.id,
-      //   payment_received: pool3userss.payment_received,
-      //   pool3Income: pool3userss.pool3Income,
-      //   usedIncome: pool3userss.usedIncome,
-      //   balanceIncome: pool3userss.balanceIncome,
-      // };
+
       setPool3Exist(pool3userss.isExist);
-
-      // setPool3users(objPool3USers);
       setPool3Id(pool3userss.id);
-      setPool3PaymentReceived(pool3userss.payment_received);
-      setPool3Income(pool3userss.pool3Income);
-      setPool3UsedIncome(pool3userss.usedIncome);
-      setPool3IncomeBalance(pool3userss.balanceIncome);
-
+      setPool3PaymentReceived(
+        Number(
+          web3.utils.fromWei(pool3userss.payment_received, "ether")
+        ).toFixed(4)
+      );
+      setPool3Income(
+        Number(web3.utils.fromWei(pool3userss.pool3Income, "ether")).toFixed(4)
+      );
+      setPool3UsedIncome(
+        Number(web3.utils.fromWei(pool3userss.usedIncome, "ether")).toFixed(4)
+      );
+      setPool3IncomeBalance(
+        Number(web3.utils.fromWei(pool3userss.balanceIncome, "ether")).toFixed(
+          4
+        )
+      );
       let pool4Price = await NEW_CBC_ROI.methods.pool4_price().call();
       setPool4_price(
-        Number(web3.utils.fromWei(pool4Price, "ether")).toFixed(2)
+        Number(web3.utils.fromWei(pool4Price, "ether")).toFixed(4)
       );
-
       let pool4activeUserIDs = await NEW_CBC_ROI.methods
         .pool4activeUserID()
         .call();
       setPool4activeUserID(pool4activeUserIDs);
-
       let pool4currUserIDs = await NEW_CBC_ROI.methods.pool4currUserID().call();
       setPool4currUserID(pool4currUserIDs);
 
@@ -275,26 +291,53 @@ const Dashboard = () => {
       let pool4userss = await NEW_CBC_ROI.methods
         .pool4users(accounts[0])
         .call();
-      // let objPool4USers = {
-      //   isExist: pool4userss.isExist ? "true" : "false",
-      //   id: pool4userss.id,
-      //   payment_received: pool4userss.payment_received,
-      //   pool4Income: pool4userss.pool4Income,
-      //   usedIncome: pool4userss.usedIncome,
-      //   balanceIncome: pool4userss.balanceIncome,
-      // };
+
       setPool4Exist(pool4userss.isExist);
 
-      // setPool4users(objPool4USers);
-      setPool4Id(pool4userss.id);
-      setPool4PaymentReceived(pool4userss.payment_received);
-      setPool4Income(pool4userss.pool4Income);
-      setPool4UsedIncome(pool4userss.usedIncome);
-      setPool4IncomeBalance(pool4userss.balanceIncome);
+      setPool4Income(
+        Number(web3.utils.fromWei(pool4userss.pool4Income, "ether")).toFixed(4)
+      );
+
+      setPool4UsedIncome(
+        Number(web3.utils.fromWei(pool4userss.usedIncome, "ether")).toFixed(4)
+      );
+      setPool4IncomeBalance(
+        Number(web3.utils.fromWei(pool4userss.balanceIncome, "ether")).toFixed(
+          4
+        )
+      );
+
+      const currentDate = new Date();
+
+      const day = currentDate.getDate();
+      const month = currentDate.getMonth() + 1; // Month is zero-indexed, so we add 1
+      const year = currentDate.getFullYear();
+
+      const currentDateEpoch = `${day}/${month}/${year}`;
+      setCurrentDateEpoch(currentDateEpoch);
     }
 
     load();
   }, []);
+
+  async function epochToDate(epochTime) {
+    // Convert epoch time to milliseconds (JavaScript uses milliseconds)
+    // Convert epoch to milliseconds
+    if (epochTime == undefined || Number(epochTime) <= 0) {
+      return 0;
+    }
+    const milliseconds = epochTime * 1000;
+    console.log("millisecond:", milliseconds);
+    // Create a new Date object
+    const date = new Date(milliseconds);
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Month is zero-based, so add 1
+    const year = date.getFullYear();
+
+    const formattedDate = `${day}/${month}/${year}`;
+
+    return formattedDate;
+  }
 
   const handleChangeReferrerId = (event) => {
     setReferrerId(event.target.value);
@@ -302,11 +345,6 @@ const Dashboard = () => {
   const handleChangeCoReferrerId = (event) => {
     setCoReferrerId(event.target.value);
   };
-  const handleChangeAmount = (event) => {
-    console.log("setReferrerId Amount", event.target.value);
-    setAmount(event.target.value);
-  };
-
   // Registration  Write function Called
   const handleSubmitRegistration = async (event) => {
     event.preventDefault();
@@ -374,18 +412,29 @@ const Dashboard = () => {
     }
   };
 
-  const handleSubmitIUpdatePool = async (event) => {
+  const handleSubmitIUpdatePool2 = async (event) => {
     event.preventDefault();
     try {
       let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
-
-      if (pool3Exist) {
-        await FPrint_.methods.upgradePool4().send({ from: account });
-      } else if (pool2Exist) {
-        await FPrint_.methods.upgradePool3().send({ from: account });
-      } else {
-        await FPrint_.methods.upgradePool3().send({ from: account });
-      }
+      await FPrint_.methods.upgradePool2().send({ from: account });
+    } catch (e) {
+      alert("Error is catched");
+    }
+  };
+  const handleSubmitIUpdatePool3 = async (event) => {
+    event.preventDefault();
+    try {
+      let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
+      await FPrint_.methods.upgradePool3().send({ from: account });
+    } catch (e) {
+      alert("Error is catched");
+    }
+  };
+  const handleSubmitIUpdatePool4 = async (event) => {
+    event.preventDefault();
+    try {
+      let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
+      await FPrint_.methods.upgradePool4().send({ from: account });
     } catch (e) {
       alert("Error is catched");
     }
@@ -457,16 +506,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Current User Fee  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Current User ID FP</h5>
-                <h4 className="mb-0">{currentId ? currentId : 0}</h4>
-              </div>
-            </div>
-          </div>
-
           {/* User ID  */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
@@ -506,36 +545,77 @@ const Dashboard = () => {
             </div>
           </div>
 
+          {/* Register Current UserID  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body-id">
+                <h5>Current User ID</h5>
+                <h4 className="mb-0">
+                  {registerCurrentUserId ? registerCurrentUserId : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+          {/* Current User Fee  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body-id">
+                <h5>Current User ID FP</h5>
+                <h4 className="mb-0">{currentId ? currentId : 0}</h4>
+              </div>
+            </div>
+          </div>
+
+          {/*  Register Token Price  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body-price">
+                <h5>Token Price</h5>
+                <h4 className="mb-0">
+                  {registerTokenPrice ? registerTokenPrice : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+
+          {/* Register Price  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body-price">
+                <h5>Register Price</h5>
+                <h4 className="mb-0">{registerPrice ? registerPrice : 0}</h4>
+              </div>
+            </div>
+          </div>
+
+          {/* Register Time  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body-time">
+                <h5>Register Time</h5>
+                <h4 className="mb-0">
+                  {registerTimeStamp ? registerTimeStamp : "00/00/00"}
+                </h4>
+              </div>
+            </div>
+          </div>
+          {/* Register Time  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body-time">
+                <h5>Current Time</h5>
+                <h4 className="mb-0">
+                  {currentDateEpoch ? currentDateEpoch : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
           {/* User List  */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body">
                 <h5>User List</h5>
                 <h4 className="mb-0">{userList ? userList : 0}</h4>
-              </div>
-            </div>
-          </div>
-
-          {/* register */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>register</h5>
-                <h4 className="mb-0">
-                  {register ? (
-                    <div>
-                      {Object.keys(register).map((key, index) => (
-                        <div key={index}>
-                          <p>
-                            {key} : {register[key]}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p>0</p>
-                  )}
-                </h4>
               </div>
             </div>
           </div>
@@ -651,12 +731,12 @@ const Dashboard = () => {
           <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
             <div className="card">
               <div className="card-body-reg">
-                <h5>Pool1 Update</h5>
+                <h5>Pool2 Update</h5>
                 <div className="row">
                   <div className="col-sm-12 my-auto">
                     <form
                       className="forms-sample"
-                      onSubmit={handleSubmitIUpdatePool}
+                      onSubmit={handleSubmitIUpdatePool2}
                     >
                       <div className="form-group w-100">
                         <input
@@ -807,12 +887,12 @@ const Dashboard = () => {
           <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
             <div className="card">
               <div className="card-body-reg">
-                <h5>Pool2 Update</h5>
+                <h5>Pool3 Update</h5>
                 <div className="row">
                   <div className="col-sm-12 my-auto">
                     <form
                       className="forms-sample"
-                      onSubmit={handleSubmitIUpdatePool}
+                      onSubmit={handleSubmitIUpdatePool3}
                     >
                       <div className="form-group w-100">
                         <input
@@ -962,12 +1042,12 @@ const Dashboard = () => {
           <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
             <div className="card">
               <div className="card-body-reg">
-                <h5>Pool3 Update</h5>
+                <h5>Pool4 Update</h5>
                 <div className="row">
                   <div className="col-sm-12 my-auto">
                     <form
                       className="forms-sample"
-                      onSubmit={handleSubmitIUpdatePool}
+                      onSubmit={handleSubmitIUpdatePool4}
                     >
                       <div className="form-group w-100">
                         <input
@@ -1141,13 +1221,13 @@ const Dashboard = () => {
 
       <div className="card-container container6">
         <div className="col-sm-12 grid-margin">
-          <div className="card">
+          <div className="card mx-auto">
             <div className="card-body text-center">Signing Section</div>
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
-            <div className="card">
+          <div className="col-sm-12 col-md-12 col-lg-12 grid-margin">
+            <div className="card-reg">
               <div className="card-body-reg">
                 <h5>Registration</h5>
                 <div className="row">
