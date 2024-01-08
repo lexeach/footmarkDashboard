@@ -10,7 +10,6 @@ const Dashboard = () => {
   const [account, setAccount] = useState();
   const [registration_Free, setRegistrationFee] = useState();
   const [currentId, setCurrentId] = useState();
-  const [priceDiff, setPriceDiff] = useState();
   const [income, setIncome] = useState();
   const [planer, setPlaner] = useState();
   const [registerTimeStamp, setRegisterTimeStamp] = useState();
@@ -18,55 +17,52 @@ const Dashboard = () => {
   const [registerTokenPrice, setRegisterTokenPrice] = useState();
   const [registerCurrentUserId, setRegisterCurrentUserId] = useState();
 
-  const [userList, setUserList] = useState();
   const [winAmount, setWinAmount] = useState();
   const [regId, setRegId] = useState();
-
-  // setWinAmount(registers.winAmount)
-  // setRegId(registers.id)
 
   const [pool1_price, setPool1_price] = useState();
   const [pool1activeUserID, setPool1activeUserID] = useState();
   const [pool1currUserID, setPool1currUserID] = useState();
-  const [pool1userList, setPool1userList] = useState();
-  // const [pool1users, setPool1users] = useState();
   const [pool1Id, setPool1Id] = useState();
   const [pool1PaymentReceived, setPool1PaymentReceived] = useState();
   const [pool1Income, setPool1Income] = useState();
   const [pool1UsedIncome, setPool1UsedIncome] = useState();
   const [pool1IncomeBalance, setPool1IncomeBalance] = useState();
   const [currentDateEpoch, setCurrentDateEpoch] = useState();
+  const [sponsorPool1Recieved, setSponsorPool1Recieved] = useState();
+  const [partnerPool1Recieved, setPartnerPool1Recieved] = useState();
 
   const [pool2_price, setPool2_price] = useState();
   const [pool2activeUserID, setPool2activeUserID] = useState();
   const [pool2currUserID, setPool2currUserID] = useState();
-  const [pool2userList, setPool2userList] = useState();
-  // const [pool2users, setPool2users] = useState();
   const [pool2Id, setPool2Id] = useState();
   const [pool2PaymentReceived, setPool2PaymentReceived] = useState();
   const [pool2Income, setPool2Income] = useState();
   const [pool2UsedIncome, setPool2UsedIncome] = useState();
   const [pool2IncomeBalance, setPool2IncomeBalance] = useState();
+  const [sponsorPool2Recieved, setSponsorPool2Recieved] = useState();
+  const [partnerPool2Recieved, setPartnerPool2Recieved] = useState();
 
   const [pool3_price, setPool3_price] = useState();
   const [pool3activeUserID, setPool3activeUserID] = useState();
   const [pool3currUserID, setPool3currUserID] = useState();
-  const [pool3userList, setPool3userList] = useState();
-  const [pool3users, setPool3users] = useState();
   const [pool3Id, setPool3Id] = useState();
   const [pool3PaymentReceived, setPool3PaymentReceived] = useState();
   const [pool3Income, setPool3Income] = useState();
   const [pool3UsedIncome, setPool3UsedIncome] = useState();
   const [pool3IncomeBalance, setPool3IncomeBalance] = useState();
+  const [sponsorPool3Recieved, setSponsorPool3Recieved] = useState();
+  const [partnerPool3Recieved, setPartnerPool3Recieved] = useState();
 
   const [pool4_price, setPool4_price] = useState();
   const [pool4activeUserID, setPool4activeUserID] = useState();
   const [pool4currUserID, setPool4currUserID] = useState();
-  const [pool4userList, setPool4userList] = useState();
 
   const [pool4Income, setPool4Income] = useState();
   const [pool4UsedIncome, setPool4UsedIncome] = useState();
   const [pool4IncomeBalance, setPool4IncomeBalance] = useState();
+  const [sponsorPool4Recieved, setSponsorPool4Recieved] = useState();
+  const [partnerPool4Recieved, setPartnerPool4Recieved] = useState();
 
   const [loading, setLoading] = useState(false);
   const [referrerId, setReferrerId] = useState();
@@ -101,41 +97,14 @@ const Dashboard = () => {
       let currentID = await NEW_CBC_ROI.methods.currUserID().call();
       setCurrentId(currentID);
 
-      let currentUserIDs = await ICO_.methods.currUserID().call();
-      // setCurrUserID(currentUserIDs);
-
       let tokenPrices = await ICO_.methods.tokenPrice().call();
-      // setTokenPrice(
-      //   Number(web3.utils.fromWei(tokenPrices, "ether")).toFixed(4)
-      // );
-
-      let priceDiffer = await NEW_CBC_ROI.methods
-        .getPricesDiff(accounts[0])
-        .call();
-
-      let newObj = {
-        time: priceDiffer._times,
-        price: priceDiffer._prices,
-        currentID: priceDiffer._currentUserID,
-      };
-      setPriceDiff(newObj);
-
       let incomes = await NEW_CBC_ROI.methods.income(accounts[0]).call();
-      // let newIncomes = {
-      //   planer: incomes.planer,
-      //   income: incomes.income,
-      // };
+
       setIncome(Number(web3.utils.fromWei(incomes.income, "ether")).toFixed(4));
       setPlaner(incomes.planer);
 
       let registers = await NEW_CBC_ROI.methods.register(accounts[0]).call();
-      // let objRegiters = {
-      //   timeStamp: registers.timeStamp,
-      //   price: registers.price,
-      //   currentUserID: registers.currentUserID,
-      //   tokenPrice: Number(web3.utils.fromWei(tokenPrices, "ether")).toFixed(4),
-      //   // currentUserID1: currentUserIDs,
-      // };
+
       setRegisterTimeStamp(await epochToDate(registers.timeStamp));
       setWinAmount(
         Number(web3.utils.fromWei(registers.winAmount, "ether")).toFixed(4)
@@ -148,10 +117,7 @@ const Dashboard = () => {
         Number(web3.utils.fromWei(tokenPrices, "ether")).toFixed(4)
       );
       setRegisterCurrentUserId(registers.currentUserID);
-      // setRegister(objRegiters);
 
-      let userLists = await NEW_CBC_ROI.methods.userList(accounts[0]).call();
-      setUserList(userLists);
       let pool1Price = await NEW_CBC_ROI.methods.pool1_price().call();
       setPool1_price(
         Number(web3.utils.fromWei(pool1Price, "ether")).toFixed(4)
@@ -165,11 +131,6 @@ const Dashboard = () => {
       let pool1currUserIDs = await NEW_CBC_ROI.methods.pool1currUserID().call();
       setPool1currUserID(pool1currUserIDs);
 
-      let pool1userLists = await NEW_CBC_ROI.methods
-        .pool1userList(accounts[0])
-        .call();
-      setPool1userList(pool1userLists);
-
       let pool1userss = await NEW_CBC_ROI.methods
         .pool1users(accounts[0])
         .call();
@@ -180,8 +141,24 @@ const Dashboard = () => {
           web3.utils.fromWei(pool1userss.payment_received, "ether")
         ).toFixed(4)
       );
+
+      setPartnerPool1Recieved(
+        Number(
+          web3.utils.fromWei(pool1userss.PartnerPoolRecieved, "ether")
+        ).toFixed(4)
+      );
+      setSponsorPool1Recieved(
+        Number(
+          web3.utils.fromWei(pool1userss.SponsorPoolRecieved, "ether")
+        ).toFixed(4)
+      );
       setPool1Income(
-        Number(web3.utils.fromWei(pool1userss.pool1Income, "ether")).toFixed(4)
+        Number(
+          web3.utils.fromWei(
+            pool1userss.usedIncome + pool1userss.balanceIncome,
+            "ether"
+          )
+        ).toFixed(4)
       );
       setPool1UsedIncome(
         Number(web3.utils.fromWei(pool1userss.usedIncome, "ether")).toFixed(4)
@@ -205,11 +182,6 @@ const Dashboard = () => {
       let pool2currUserIDs = await NEW_CBC_ROI.methods.pool2currUserID().call();
       setPool2currUserID(pool2currUserIDs);
 
-      let pool2userLists = await NEW_CBC_ROI.methods
-        .pool2userList(accounts[0])
-        .call();
-      setPool2userList(pool2userLists);
-
       let pool2userss = await NEW_CBC_ROI.methods
         .pool2users(accounts[0])
         .call();
@@ -221,7 +193,12 @@ const Dashboard = () => {
         ).toFixed(4)
       );
       setPool2Income(
-        Number(web3.utils.fromWei(pool2userss.pool2Income, "ether")).toFixed(4)
+        Number(
+          web3.utils.fromWei(
+            pool2userss.usedIncome + pool2userss.balanceIncome,
+            "ether"
+          )
+        ).toFixed(4)
       );
       setPool2UsedIncome(
         Number(web3.utils.fromWei(pool2userss.usedIncome, "ether")).toFixed(4)
@@ -230,6 +207,16 @@ const Dashboard = () => {
         Number(web3.utils.fromWei(pool2userss.balanceIncome, "ether")).toFixed(
           4
         )
+      );
+      setPartnerPool2Recieved(
+        Number(
+          web3.utils.fromWei(pool2userss.PartnerPoolRecieved, "ether")
+        ).toFixed(4)
+      );
+      setSponsorPool2Recieved(
+        Number(
+          web3.utils.fromWei(pool2userss.SponsorPoolRecieved, "ether")
+        ).toFixed(4)
       );
 
       let pool3Price = await NEW_CBC_ROI.methods.pool3_price().call();
@@ -245,11 +232,6 @@ const Dashboard = () => {
       let pool3currUserIDs = await NEW_CBC_ROI.methods.pool3currUserID().call();
       setPool3currUserID(pool3currUserIDs);
 
-      let pool3userLists = await NEW_CBC_ROI.methods
-        .pool3userList(accounts[0])
-        .call();
-      setPool3userList(pool3userLists);
-
       let pool3userss = await NEW_CBC_ROI.methods
         .pool3users(accounts[0])
         .call();
@@ -261,8 +243,23 @@ const Dashboard = () => {
           web3.utils.fromWei(pool3userss.payment_received, "ether")
         ).toFixed(4)
       );
+      setPartnerPool3Recieved(
+        Number(
+          web3.utils.fromWei(pool3userss.PartnerPoolRecieved, "ether")
+        ).toFixed(4)
+      );
+      setSponsorPool3Recieved(
+        Number(
+          web3.utils.fromWei(pool2userss.SponsorPoolRecieved, "ether")
+        ).toFixed(4)
+      );
       setPool3Income(
-        Number(web3.utils.fromWei(pool3userss.pool3Income, "ether")).toFixed(4)
+        Number(
+          web3.utils.fromWei(
+            pool3userss.usedIncome + pool3userss.balanceIncome,
+            "ether"
+          )
+        ).toFixed(4)
       );
       setPool3UsedIncome(
         Number(web3.utils.fromWei(pool3userss.usedIncome, "ether")).toFixed(4)
@@ -283,11 +280,6 @@ const Dashboard = () => {
       let pool4currUserIDs = await NEW_CBC_ROI.methods.pool4currUserID().call();
       setPool4currUserID(pool4currUserIDs);
 
-      let pool4userLists = await NEW_CBC_ROI.methods
-        .pool4userList(accounts[0])
-        .call();
-      setPool4userList(pool4userLists);
-
       let pool4userss = await NEW_CBC_ROI.methods
         .pool4users(accounts[0])
         .call();
@@ -295,7 +287,22 @@ const Dashboard = () => {
       setPool4Exist(pool4userss.isExist);
 
       setPool4Income(
-        Number(web3.utils.fromWei(pool4userss.pool4Income, "ether")).toFixed(4)
+        Number(
+          web3.utils.fromWei(
+            pool4userss.usedIncome + pool4userss.balanceIncome,
+            "ether"
+          )
+        ).toFixed(4)
+      );
+      setPartnerPool4Recieved(
+        Number(
+          web3.utils.fromWei(pool4userss.PartnerPoolRecieved, "ether")
+        ).toFixed(4)
+      );
+      setSponsorPool4Recieved(
+        Number(
+          web3.utils.fromWei(pool4userss.SponsorPoolRecieved, "ether")
+        ).toFixed(4)
       );
 
       setPool4UsedIncome(
@@ -610,15 +617,6 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          {/* User List  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>User List</h5>
-                <h4 className="mb-0">{userList ? userList : 0}</h4>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -664,15 +662,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Pool1 User List  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Pool1 User List</h5>
-                <h4 className="mb-0">{pool1userList ? pool1userList : 0}</h4>
-              </div>
-            </div>
-          </div>
           {/*  User ID */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
@@ -723,6 +712,29 @@ const Dashboard = () => {
                 <h5> Income Balance</h5>
                 <h4 className="mb-0">
                   {pool1IncomeBalance ? pool1IncomeBalance : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+
+          {/* Partner Pool  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> Partner Pool Recieved</h5>
+                <h4 className="mb-0">
+                  {partnerPool1Recieved ? partnerPool1Recieved : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+          {/* SponsorPoolRecieved  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5>Sponsor Pool Recieved</h5>
+                <h4 className="mb-0">
+                  {sponsorPool1Recieved ? sponsorPool1Recieved : 0}
                 </h4>
               </div>
             </div>
@@ -820,15 +832,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Pool1 User List  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Pool2 User List</h5>
-                <h4 className="mb-0">{pool2userList ? pool2userList : 0}</h4>
-              </div>
-            </div>
-          </div>
           {/*  User ID */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
@@ -879,6 +882,51 @@ const Dashboard = () => {
                 <h5> Income Balance</h5>
                 <h4 className="mb-0">
                   {pool2IncomeBalance ? pool2IncomeBalance : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+          {/* PartnerPoolRecieved   */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> Partner Pool Recieved</h5>
+                <h4 className="mb-0">
+                  {partnerPool2Recieved ? partnerPool2Recieved : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+          {/* SponsorPoolRecieved  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> Sponsor Pool Recieved </h5>
+                <h4 className="mb-0">
+                  {sponsorPool2Recieved ? sponsorPool2Recieved : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+          {/* Income PartnerPoolRecieved  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> PartnerPoolRecieved</h5>
+                <h4 className="mb-0">
+                  {partnerPool2Recieved ? partnerPool2Recieved : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+
+          {/* SponsorPoolRecieved  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> Sponsor Pool Recieved</h5>
+                <h4 className="mb-0">
+                  {sponsorPool2Recieved ? sponsorPool2Recieved : 0}
                 </h4>
               </div>
             </div>
@@ -975,16 +1023,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Pool1 User List  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Pool3 User List</h5>
-                <h4 className="mb-0">{pool3userList ? pool3userList : 0}</h4>
-              </div>
-            </div>
-          </div>
-
           {/*  User ID */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
@@ -1039,6 +1077,30 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+          {/*  PartnerPoolRecieved  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> Partner Pool Recieved</h5>
+                <h4 className="mb-0">
+                  {partnerPool3Recieved ? partnerPool3Recieved : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+
+          {/* PartnerPoolRecieved   */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> Partner Pool Recieved </h5>
+                <h4 className="mb-0">
+                  {partnerPool3Recieved ? partnerPool3Recieved : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+
           <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
             <div className="card">
               <div className="card-body-reg">
@@ -1130,15 +1192,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Pool1 User List  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Pool4 User List</h5>
-                <h4 className="mb-0">{pool4userList ? pool4userList : 0}</h4>
-              </div>
-            </div>
-          </div>
           {/*  User ID */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
@@ -1189,6 +1242,29 @@ const Dashboard = () => {
                 <h5> Income Balance</h5>
                 <h4 className="mb-0">
                   {pool4IncomeBalance ? pool4IncomeBalance : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+          {/* PartnerPoolRecieved   */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> partnerPool4Recieved</h5>
+                <h4 className="mb-0">
+                  {partnerPool4Recieved ? partnerPool4Recieved : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+
+          {/* SponsorPoolRecieved  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> Sponsor Pool Recieved</h5>
+                <h4 className="mb-0">
+                  {sponsorPool4Recieved ? sponsorPool4Recieved : 0}
                 </h4>
               </div>
             </div>
