@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -46,10 +45,7 @@ function DrawerAppBar(props) {
         <img className="logo-img" src={Logo} alt="ICOlogo" />
       </Typography>
       <Divider />
-
-      {/* <Button sx={{ color: "#fff" }}>{account}</Button> */}
       <List>
-        {/* <ListItem disablePadding> */}
         <ListItemButton sx={{ textAlign: "center" }}>
           <ListItemText
             className="account_mob_"
@@ -57,34 +53,17 @@ function DrawerAppBar(props) {
             primary={account}
           />
         </ListItemButton>
-        {/* </ListItem> */}
       </List>
+
       <List>
-        <a onClick={() => openInNewTab("https://google.com")}>
+        <a onClick={() => openInNewTab("https://bscscan.com/address/0x57949388158dd8d2a790dbfc51cdf3caa265b64d")}>
           <ListItem disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary="SWAP" />
+              <ListItemText primary="CBC" />
             </ListItemButton>
           </ListItem>
         </a>
       </List>
-      {/* <List> */}
-      {/* <Link to={`/`}>
-          <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary="Home" />
-            </ListItemButton>
-          </ListItem>
-        </Link> */}
-
-      {/* <Link to={`/event`}>
-          <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary="Event" />
-            </ListItemButton>
-          </ListItem>
-        </Link> */}
-      {/* </List> */}
     </Box>
   );
 
@@ -96,13 +75,9 @@ function DrawerAppBar(props) {
     window.location.reload();
   }
 
-  // console.log("ethereum account", ethereum.selectedAddress);
-
   React.useEffect(() => {
-    // console.log("load account");
     async function load() {
       const accounts = await web3.eth.requestAccounts();
-      // console.log("accounts", accounts);
       setAccount(accounts[0]);
     }
     load();
@@ -134,33 +109,26 @@ function DrawerAppBar(props) {
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Button
-              sx={{ color: "#fff" }}
+              sx={{ color: "#23def3" }}
               onClick={() => copyToClipBoard(account)}
             >
               {account}
             </Button>
             <Button
-              onClick={() => openInNewTab("https://google.com")}
+              onClick={() => openInNewTab("https://bscscan.com/address/0x57949388158dd8d2a790dbfc51cdf3caa265b64d/")}
               sx={{
-                border: "2px #f4ad23 solid",
-                color: "#2f2f2f !important",
+                border: "2px #23def3 solid",
+                color: "#23def3 !important",
                 borderRadius: "20px;",
               }}
             >
-              SWAP
+              CBC
             </Button>
-            {/* <Link to={`/`}>
-              <Button sx={{ color: "#fff" }}>Home</Button>
-            </Link> */}
-            {/* <Link to={`/event`}>
-              <Button sx={{ color: "#fff" }}>Event</Button>
-            </Link> */}
           </Box>
         </Toolbar>
       </AppBar>
       <Box component="nav">
         <Drawer
-          //   container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
