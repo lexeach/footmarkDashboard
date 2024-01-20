@@ -61,12 +61,22 @@ const Dashboard = () => {
   const [pool4activeUserID, setPool4activeUserID] = useState();
   const [pool4currUserID, setPool4currUserID] = useState();
   const [pool4Id, setPool4Id] = useState();
-
   const [pool4Income, setPool4Income] = useState();
   const [pool4UsedIncome, setPool4UsedIncome] = useState();
   const [pool4IncomeBalance, setPool4IncomeBalance] = useState();
   const [sponsorPool4Recieved, setSponsorPool4Recieved] = useState();
   const [partnerPool4Recieved, setPartnerPool4Recieved] = useState();
+
+  const [pool5_price, setPool5_price] = useState();
+  const [pool5activeUserID, setPool5activeUserID] = useState();
+  const [pool5currUserID, setPool5currUserID] = useState();
+  const [pool5Id, setPool5Id] = useState();
+  const [pool5Income, setPool5Income] = useState();
+  const [pool5UsedIncome, setPool5UsedIncome] = useState();
+  const [pool5IncomeBalance, setPool5IncomeBalance] = useState();
+  const [sponsorPool5Recieved, setSponsorPool5Recieved] = useState();
+  const [partnerPool5Recieved, setPartnerPool5Recieved] = useState();
+  const [pool5PaymentReceived, setPool5PaymentReceived] = useState();
 
   const [loading, setLoading] = useState(false);
   const [referrerId, setReferrerId] = useState();
@@ -333,6 +343,59 @@ const Dashboard = () => {
         )
       );
 
+      let pool5Price = await NEW_CBC_ROI.methods.pool5_price().call();
+      setPool3_price(
+        Number(web3.utils.fromWei(pool5Price, "ether")).toFixed(4)
+      );
+
+      let pool5activeUserIDs = await NEW_CBC_ROI.methods
+        .pool3activeUserID()
+        .call();
+      setPool5activeUserID(pool5activeUserIDs);
+
+      let pool5currUserIDs = await NEW_CBC_ROI.methods.pool5currUserID().call();
+      setPool5currUserID(pool5currUserIDs);
+
+      let pool5userss = await NEW_CBC_ROI.methods
+        .pool5users(accounts[0])
+        .call();
+
+      // setPool5Exist(pool5userss.isExist);
+      setPool5Id(pool5userss.id);
+      setPool5PaymentReceived(
+        Number(
+          web3.utils.fromWei(pool5userss.payment_received, "ether")
+        ).toFixed(4)
+      );
+      setPartnerPool5Recieved(
+        Number(
+          web3.utils.fromWei(pool5userss.PartnerPoolRecieved, "ether")
+        ).toFixed(4)
+      );
+      setSponsorPool5Recieved(
+        Number(
+          web3.utils.fromWei(pool5userss.SponsorPoolRecieved, "ether")
+        ).toFixed(4)
+      );
+      setPool5Income(
+        Number(
+          web3.utils.fromWei(
+            (
+              Number(pool5userss.usedIncome) + Number(pool5userss.balanceIncome)
+            ).toString(),
+            "ether"
+          )
+        ).toFixed(4)
+      );
+      setPool5UsedIncome(
+        Number(web3.utils.fromWei(pool5userss.usedIncome, "ether")).toFixed(4)
+      );
+      setPool5IncomeBalance(
+        Number(web3.utils.fromWei(pool5userss.balanceIncome, "ether")).toFixed(
+          4
+        )
+      );
+
       const currentDate = new Date();
 
       const day = currentDate.getDate();
@@ -468,6 +531,15 @@ const Dashboard = () => {
       alert("Error is catched");
     }
   };
+  const handleSubmitIUpdatePool5 = async (event) => {
+    event.preventDefault();
+    try {
+      let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
+      await FPrint_.methods.upgradePool5().send({ from: account });
+    } catch (e) {
+      alert("Error is catched");
+    }
+  };
   const handleSubmitIWithdrawPool1 = async (event) => {
     event.preventDefault();
     try {
@@ -503,6 +575,15 @@ const Dashboard = () => {
     try {
       let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
       await FPrint_.methods.withdrawPool4Income().send({ from: account });
+    } catch (e) {
+      alert("Error is catched");
+    }
+  };
+  const handleSubmitIWithdrawPool5 = async (event) => {
+    event.preventDefault();
+    try {
+      let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
+      await FPrint_.methods.withdrawPool5Income().send({ from: account });
     } catch (e) {
       alert("Error is catched");
     }
@@ -1319,6 +1400,29 @@ const Dashboard = () => {
           <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
             <div className="card">
               <div className="card-body-reg">
+                <h5>Pool5 Update</h5>
+                <div className="row">
+                  <div className="col-sm-12 my-auto">
+                    <form
+                      className="forms-sample"
+                      onSubmit={handleSubmitIUpdatePool5}
+                    >
+                      <div className="form-group w-100">
+                        <input
+                          className="btn mt-3 submitbtn_"
+                          type="submit"
+                          value="Update Pool"
+                        />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
+            <div className="card">
+              <div className="card-body-reg">
                 <h5>Withdraw Pool4 Income</h5>
                 <div className="row">
                   <div className="col-sm-12 my-auto">
@@ -1331,6 +1435,151 @@ const Dashboard = () => {
                           className="btn mt-3 submitbtn_"
                           type="submit"
                           value="Withdraw Pool4"
+                        />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Pool 5 Row Container */}
+      <div className="card-container container5">
+        <div className="col-sm-12 grid-margin">
+          <div className="card">
+            <div className="card-body text-center">Pool5 Value</div>
+          </div>
+        </div>
+        <div className="row">
+          {/* pool1_price */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5>Pool5 Price</h5>
+                <h4 className="mb-0">{pool5_price ? pool5_price : 0} USDT</h4>
+              </div>
+            </div>
+          </div>
+
+          {/* pool1activeUserID */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5>Pool5 Active User ID</h5>
+                <h4 className="mb-0">
+                  {pool5activeUserID ? pool5activeUserID : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+
+          {/* pool1currUserID */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5>Pool5 Current User ID</h5>
+                <h4 className="mb-0">
+                  {pool5currUserID ? pool5currUserID : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+
+          {/*  User ID */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> Users ID</h5>
+                <h4 className="mb-0">{pool5Id ? pool5Id : 0}</h4>
+              </div>
+            </div>
+          </div>
+
+          {/* Payment Received  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5>Payment Received</h5>
+                <h4 className="mb-0">
+                  {pool5PaymentReceived ? pool5PaymentReceived : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+
+          {/* Pool Income  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5>Pool Income</h5>
+                <h4 className="mb-0">{pool5Income ? pool5Income : 0}</h4>
+              </div>
+            </div>
+          </div>
+          {/* Income USed  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> Income Used</h5>
+                <h4 className="mb-0">
+                  {pool5UsedIncome ? pool5UsedIncome : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+
+          {/* Income Balance  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> Income Balance</h5>
+                <h4 className="mb-0">
+                  {pool5IncomeBalance ? pool5IncomeBalance : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+          {/* PartnerPoolRecieved   */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> partnerPool5Recieved</h5>
+                <h4 className="mb-0">
+                  {partnerPool5Recieved ? partnerPool5Recieved : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+
+          {/* SponsorPoolRecieved  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> Sponsor Pool Recieved</h5>
+                <h4 className="mb-0">
+                  {sponsorPool5Recieved ? sponsorPool5Recieved : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+          <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
+            <div className="card">
+              <div className="card-body-reg">
+                <h5>Withdraw Pool5 Income</h5>
+                <div className="row">
+                  <div className="col-sm-12 my-auto">
+                    <form
+                      className="forms-sample"
+                      onSubmit={handleSubmitIWithdrawPool5}
+                    >
+                      <div className="form-group w-100">
+                        <input
+                          className="btn mt-3 submitbtn_"
+                          type="submit"
+                          value="Withdraw Pool5"
                         />
                       </div>
                     </form>
