@@ -109,7 +109,7 @@ const Dashboard = () => {
       ).toFixed(4);
       setRegistrationFee(convert_regfee);
       // set Last TopUp:
-      let currentID = await NEW_CBC_ROI.methods.currUserID().call();
+      let currentID = await ICO.methods.currUserID().call();
       setCurrentId(currentID);
 
       let tokenPrices = await ICO_.methods.tokenPrice().call();
