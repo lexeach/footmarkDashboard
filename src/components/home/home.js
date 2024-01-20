@@ -71,6 +71,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [referrerId, setReferrerId] = useState();
   const [coReferrerId, setCoReferrerId] = useState();
+  const [identity, setIdentity] = useState();
 
   const [pool2Exist, setPool2Exist] = useState();
   const [pool3Exist, setPool3Exist] = useState();
@@ -370,6 +371,9 @@ const Dashboard = () => {
   const handleChangeCoReferrerId = (event) => {
     setCoReferrerId(event.target.value);
   };
+  const handleChangeIdentity = (event) => {
+    setIdentity(event.target.value);
+  };
   // Registration  Write function Called
   const handleSubmitRegistration = async (event) => {
     event.preventDefault();
@@ -395,11 +399,11 @@ const Dashboard = () => {
             setLoading(false);
             if (!isEthereumAddress) {
               reg_user = await FPrint_.methods
-                .Registration(referrerId, coReferrerId, amount)
+                .Registration(referrerId, coReferrerId, amount, identity)
                 .send({ from: account, value: 0 });
             } else {
               reg_user = await FPrint_.methods
-                .Registration2(referrerId, coReferrerId, amount)
+                .Registration2(referrerId, coReferrerId, amount, identity)
                 .send({ from: account, value: 0 });
             }
 
@@ -417,11 +421,11 @@ const Dashboard = () => {
       } else {
         if (!isEthereumAddress) {
           reg_user = await FPrint_.methods
-            .Registration(referrerId, coReferrerId, amount)
+            .Registration(referrerId, coReferrerId, amount, identity)
             .send({ from: account, value: 0 });
         } else {
           reg_user = await FPrint_.methods
-            .Registration2(referrerId, coReferrerId, amount)
+            .Registration2(referrerId, coReferrerId, amount, identity)
             .send({ from: account, value: 0 });
         }
         console.log("****** native coin accepting condtion", reg_user);
@@ -599,7 +603,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body-id">
-                <h5>Current User ID</h5>
+                <h5>Staked User ID</h5>
                 <h4 className="mb-0">
                   {registerCurrentUserId ? registerCurrentUserId : 0}
                 </h4>
@@ -1374,6 +1378,16 @@ const Dashboard = () => {
                           onChange={handleChangeCoReferrerId}
                           value={coReferrerId || ""}
                           placeholder="Co Referrer ID"
+                        />
+
+                        <input
+                          className="form-control mt-2"
+                          type="string"
+                          required
+                          name="identity"
+                          onChange={handleChangeIdentity}
+                          value={identity || ""}
+                          placeholder="Identity"
                         />
 
                         {loading && (
