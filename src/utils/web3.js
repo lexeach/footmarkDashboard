@@ -706,7 +706,7 @@ module.exports = {
     ],
   },
   ICO: {
-    address: "0xb5C058a19DA60BEfcB60fEd9a6aeF08BDDdC2a66",
+    address: "0x6edccfea9e6546aaaa744746fee92ee1d9012208",
     ABI: [
       {
         inputs: [

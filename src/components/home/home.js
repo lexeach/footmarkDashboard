@@ -108,8 +108,8 @@ const Dashboard = () => {
         web3.utils.fromWei(RegistrationFee, "ether")
       ).toFixed(4);
       setRegistrationFee(convert_regfee);
-      // set Last TopUp:
-      let currentID = await NEW_CBC_ROI.methods.currUserID().call();
+      // set Last TopUp:  Current Id of ICO
+      let currentID = await ICO_.methods.currUserID().call();
       setCurrentId(currentID);
 
       let tokenPrices = await ICO_.methods.tokenPrice().call();
