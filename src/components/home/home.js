@@ -705,7 +705,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body-price">
-                <h5>Token Price</h5>
+                <h5>Current Token Price</h5>
                 <h4 className="mb-0">
                   {registerTokenPrice ? registerTokenPrice : 0}
                 </h4>
@@ -717,7 +717,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body-price">
-                <h5>Marked Price</h5>
+                <h5>Marked Token Price</h5>
                 <h4 className="mb-0">{registerPrice ? registerPrice : 0}</h4>
               </div>
             </div>
