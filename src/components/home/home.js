@@ -684,7 +684,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body-id">
-                <h5>Staked User ID</h5>
+                <h5>Marked community</h5>
                 <h4 className="mb-0">
                   {registerCurrentUserId ? registerCurrentUserId : 0}
                 </h4>
@@ -695,7 +695,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body-id">
-                <h5>Current User ID FP</h5>
+                <h5>Current community</h5>
                 <h4 className="mb-0">{currentId ? currentId : 0}</h4>
               </div>
             </div>
@@ -717,7 +717,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body-price">
-                <h5>Register Price</h5>
+                <h5>Marked Price</h5>
                 <h4 className="mb-0">{registerPrice ? registerPrice : 0}</h4>
               </div>
             </div>
@@ -727,7 +727,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body-time">
-                <h5>Register Time</h5>
+                <h5>Marked on</h5>
                 <h4 className="mb-0">
                   {registerTimeStamp ? registerTimeStamp : "00/00/00"}
                 </h4>
@@ -738,7 +738,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body-time">
-                <h5>Current Time</h5>
+                <h5>Current date</h5>
                 <h4 className="mb-0">
                   {currentDateEpoch ? currentDateEpoch : 0}
                 </h4>
@@ -871,7 +871,7 @@ const Dashboard = () => {
           <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
             <div className="card">
               <div className="card-body-reg">
-                <h5>Pool2 Update</h5>
+                <h5>Upgrade Pool2</h5>
                 <div className="row">
                   <div className="col-sm-12 my-auto">
                     <form
@@ -1063,7 +1063,7 @@ const Dashboard = () => {
           <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
             <div className="card">
               <div className="card-body-reg">
-                <h5>Pool3 Update</h5>
+                <h5>Upgrade Pool3</h5>
                 <div className="row">
                   <div className="col-sm-12 my-auto">
                     <form
@@ -1232,7 +1232,7 @@ const Dashboard = () => {
           <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
             <div className="card">
               <div className="card-body-reg">
-                <h5>Pool4 Update</h5>
+                <h5>Upgrade Pool4</h5>
                 <div className="row">
                   <div className="col-sm-12 my-auto">
                     <form
@@ -1400,7 +1400,7 @@ const Dashboard = () => {
           <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
             <div className="card">
               <div className="card-body-reg">
-                <h5>Pool5 Update</h5>
+                <h5>Upgrade Pool5</h5>
                 <div className="row">
                   <div className="col-sm-12 my-auto">
                     <form
