@@ -1,6 +1,6 @@
 module.exports = {
   FPrint: {
-    address: "0x8aea8137494be965626696e79def22b5fc2e675d",
+    address: "0xf4b74BE0129e6cf9F27a9E87431919Ab37fCC2B8",
     ABI: [
       {
         inputs: [
@@ -706,7 +706,7 @@ module.exports = {
     ],
   },
   ICO: {
-    address: "0xb5C058a19DA60BEfcB60fEd9a6aeF08BDDdC2a66",
+    address: "0x57274fF68afe7e8e6Ae8aE59f4E10B131DcFe219",
     ABI: [
       {
         inputs: [
