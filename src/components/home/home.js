@@ -504,15 +504,63 @@ const Dashboard = () => {
     }
   };
 
+   // Registration  Write function Called
   const handleSubmitIUpdatePool2 = async (event) => {
     event.preventDefault();
     try {
+      
+      let total2 = Number(pool2_price);
+      let amount2 = web3.utils.toWei(total.toString(), "ether"); // registration_Free; //web3.utils.toWei(amount, "ether")).toFixed(2) / 10000000000000000;
+
       let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
-      await FPrint_.methods.upgradePool2().send({ from: account });
+      let USDT_ = new web3.eth.Contract(USDT.ABI, USDT.address);
+      let isAllowance2 = await USDT_.methods
+        .allowance(account, FPrint.address)
+        .call();
+      let isApprove, reg_pool2;
+      if (isAllowance2 < amount2) {
+        setLoading(true);
+
+        isApprove = await USDT_.methods
+          .approve(FPrint.address, amount2)
+          .send({ from: account })
+          .on("receipt", async function (receipt) {
+            setLoading(false);
+            if (!isEthereumAddress) {
+              reg_pool2 = await FPrint_.methods
+                .upgradePool2(amount2)
+                .send({ from: account, value: 0 });
+            } 
+
+            console.log("****** native coin accepting condtion", reg_pool2);
+            if (reg_pool2.status) {
+              alert("Registerd Success");
+            } else {
+              alert("Registerd Failed !!!!");
+            }
+          })
+          .on("error", function (error, receipt) {
+            // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
+            setLoading(false);
+          });
+      } else {
+        if (!isEthereumAddress) {
+          reg_pool2 = await FPrint_.methods
+            .upgradePool2(amount2)
+            .send({ from: account, value: 0 });
+        }        console.log("****** native coin accepting condtion", reg_user);
+        if (reg_user.status) {
+          alert("Registerd Success");
+        } else {
+          alert("Registerd Failed !!!!");
+        }
+      }
     } catch (e) {
-      alert("Error is catched");
+      console.log("Error: ", e);
+      alert("Error is catched", e);
     }
   };
+
   const handleSubmitIUpdatePool3 = async (event) => {
     event.preventDefault();
     try {
