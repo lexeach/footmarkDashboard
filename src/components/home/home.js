@@ -57,26 +57,7 @@ const Dashboard = () => {
   const [sponsorPool3Recieved, setSponsorPool3Recieved] = useState();
   const [partnerPool3Recieved, setPartnerPool3Recieved] = useState();
 
-  const [pool4_price, setPool4_price] = useState();
-  const [pool4activeUserID, setPool4activeUserID] = useState();
-  const [pool4currUserID, setPool4currUserID] = useState();
-  const [pool4Id, setPool4Id] = useState();
-  const [pool4Income, setPool4Income] = useState();
-  const [pool4UsedIncome, setPool4UsedIncome] = useState();
-  const [pool4IncomeBalance, setPool4IncomeBalance] = useState();
-  const [sponsorPool4Recieved, setSponsorPool4Recieved] = useState();
-  const [partnerPool4Recieved, setPartnerPool4Recieved] = useState();
-
-  const [pool5_price, setPool5_price] = useState();
-  const [pool5activeUserID, setPool5activeUserID] = useState();
-  const [pool5currUserID, setPool5currUserID] = useState();
-  const [pool5Id, setPool5Id] = useState();
-  const [pool5Income, setPool5Income] = useState();
-  const [pool5UsedIncome, setPool5UsedIncome] = useState();
-  const [pool5IncomeBalance, setPool5IncomeBalance] = useState();
-  const [sponsorPool5Recieved, setSponsorPool5Recieved] = useState();
-  const [partnerPool5Recieved, setPartnerPool5Recieved] = useState();
-  const [pool5PaymentReceived, setPool5PaymentReceived] = useState();
+  const [taxRate, setTaxRate] = useState();
 
   const [loading, setLoading] = useState(false);
   const [referrerId, setReferrerId] = useState();
@@ -121,8 +102,14 @@ const Dashboard = () => {
       let registers = await NEW_CBC_ROI.methods.register(accounts[0]).call();
 
       setRegisterTimeStamp(await epochToDate(registers.timeStamp));
+      console.log("registers.winAmount", registers.winAmount);
       setWinAmount(
-        Number(web3.utils.fromWei(registers.winAmount, "ether")).toFixed(4)
+        Number(
+          web3.utils.fromWei(
+            registers.winAmount ? registers.winAmount : "0",
+            "ether"
+          )
+        ).toFixed(4)
       );
       setRegId(registers.id);
       setRegisterPrice(
@@ -143,7 +130,8 @@ const Dashboard = () => {
       setPool1_price(
         Number(web3.utils.fromWei(pool1Price, "ether")).toFixed(4)
       );
-
+      let texRates = await NEW_CBC_ROI.methods.taxRate();
+      setTaxRate(texRates);
       let pool1activeUserIDs = await NEW_CBC_ROI.methods
         .pool1activeUserID()
         .call();
@@ -176,15 +164,22 @@ const Dashboard = () => {
       setPool1Income(
         Number(
           web3.utils.fromWei(
-            (
-              Number(pool1userss.usedIncome) + Number(pool1userss.balanceIncome)
+            (Number(pool1userss.usedIncome) + Number(pool1userss.balanceIncome)
+              ? Number(pool1userss.usedIncome) +
+                Number(pool1userss.balanceIncome)
+              : 0
             ).toString(),
             "ether"
           )
         ).toFixed(4)
       );
       setPool1UsedIncome(
-        Number(web3.utils.fromWei(pool1userss.usedIncome, "ether")).toFixed(4)
+        Number(
+          web3.utils.fromWei(
+            (pool1userss.usedIncome ? pool1userss.usedIncome : 0).toString(),
+            "ether"
+          )
+        ).toFixed(4)
       );
       setPool1IncomeBalance(
         Number(web3.utils.fromWei(pool1userss.balanceIncome, "ether")).toFixed(
@@ -218,15 +213,22 @@ const Dashboard = () => {
       setPool2Income(
         Number(
           web3.utils.fromWei(
-            (
-              Number(pool2userss.usedIncome) + Number(pool2userss.balanceIncome)
+            (Number(pool2userss.usedIncome) + Number(pool2userss.balanceIncome)
+              ? Number(pool2userss.usedIncome) +
+                Number(pool2userss.balanceIncome)
+              : 0
             ).toString(),
             "ether"
           )
         ).toFixed(4)
       );
       setPool2UsedIncome(
-        Number(web3.utils.fromWei(pool2userss.usedIncome, "ether")).toFixed(4)
+        Number(
+          web3.utils.fromWei(
+            (pool2userss.usedIncome ? pool2userss.usedIncome : 0).toString(),
+            "ether"
+          )
+        ).toFixed(4)
       );
       setPool2IncomeBalance(
         Number(web3.utils.fromWei(pool2userss.balanceIncome, "ether")).toFixed(
@@ -281,117 +283,25 @@ const Dashboard = () => {
       setPool3Income(
         Number(
           web3.utils.fromWei(
-            (
-              Number(pool3userss.usedIncome) + Number(pool3userss.balanceIncome)
+            (Number(pool3userss.usedIncome) + Number(pool3userss.balanceIncome)
+              ? Number(pool3userss.usedIncome) +
+                Number(pool3userss.balanceIncome)
+              : 0
             ).toString(),
             "ether"
           )
         ).toFixed(4)
       );
       setPool3UsedIncome(
-        Number(web3.utils.fromWei(pool3userss.usedIncome, "ether")).toFixed(4)
+        Number(
+          web3.utils.fromWei(
+            (pool3userss.usedIncome ? pool3userss.usedIncome : 0).toString(),
+            "ether"
+          )
+        ).toFixed(4)
       );
       setPool3IncomeBalance(
         Number(web3.utils.fromWei(pool3userss.balanceIncome, "ether")).toFixed(
-          4
-        )
-      );
-      let pool4Price = await NEW_CBC_ROI.methods.pool4_price().call();
-      setPool4_price(
-        Number(web3.utils.fromWei(pool4Price, "ether")).toFixed(4)
-      );
-      let pool4activeUserIDs = await NEW_CBC_ROI.methods
-        .pool4activeUserID()
-        .call();
-      setPool4activeUserID(pool4activeUserIDs);
-      let pool4currUserIDs = await NEW_CBC_ROI.methods.pool4currUserID().call();
-      setPool4currUserID(pool4currUserIDs);
-
-      let pool4userss = await NEW_CBC_ROI.methods
-        .pool4users(accounts[0])
-        .call();
-
-      setPool4Exist(pool4userss.isExist);
-      setPool4Id(pool4userss.id);
-      setPool4Income(
-        Number(
-          web3.utils.fromWei(
-            (
-              Number(pool4userss.usedIncome) + Number(pool4userss.balanceIncome)
-            ).toString(),
-            "ether"
-          )
-        ).toFixed(4)
-      );
-      setPartnerPool4Recieved(
-        Number(
-          web3.utils.fromWei(pool4userss.PartnerPoolRecieved, "ether")
-        ).toFixed(4)
-      );
-      setSponsorPool4Recieved(
-        Number(
-          web3.utils.fromWei(pool4userss.SponsorPoolRecieved, "ether")
-        ).toFixed(4)
-      );
-
-      setPool4UsedIncome(
-        Number(web3.utils.fromWei(pool4userss.usedIncome, "ether")).toFixed(4)
-      );
-      setPool4IncomeBalance(
-        Number(web3.utils.fromWei(pool4userss.balanceIncome, "ether")).toFixed(
-          4
-        )
-      );
-
-      let pool5Price = await NEW_CBC_ROI.methods.pool5_price().call();
-      setPool3_price(
-        Number(web3.utils.fromWei(pool5Price, "ether")).toFixed(4)
-      );
-
-      let pool5activeUserIDs = await NEW_CBC_ROI.methods
-        .pool3activeUserID()
-        .call();
-      setPool5activeUserID(pool5activeUserIDs);
-
-      let pool5currUserIDs = await NEW_CBC_ROI.methods.pool5currUserID().call();
-      setPool5currUserID(pool5currUserIDs);
-
-      let pool5userss = await NEW_CBC_ROI.methods
-        .pool5users(accounts[0])
-        .call();
-
-      // setPool5Exist(pool5userss.isExist);
-      setPool5Id(pool5userss.id);
-      setPool5PaymentReceived(
-        Number(
-          web3.utils.fromWei(pool5userss.payment_received, "ether")
-        ).toFixed(4)
-      );
-      setPartnerPool5Recieved(
-        Number(
-          web3.utils.fromWei(pool5userss.PartnerPoolRecieved, "ether")
-        ).toFixed(4)
-      );
-      setSponsorPool5Recieved(
-        Number(
-          web3.utils.fromWei(pool5userss.SponsorPoolRecieved, "ether")
-        ).toFixed(4)
-      );
-      setPool5Income(
-        Number(
-          web3.utils.fromWei(
-            (
-              Number(pool5userss.usedIncome) + Number(pool5userss.balanceIncome)
-            ).toString(),
-            "ether"
-          )
-        ).toFixed(4)
-      );
-      setPool5UsedIncome(
-        Number(web3.utils.fromWei(pool5userss.usedIncome, "ether")).toFixed(4)
-      );
-      setPool5IncomeBalance(
-        Number(web3.utils.fromWei(pool5userss.balanceIncome, "ether")).toFixed(
           4
         )
       );
@@ -442,10 +352,9 @@ const Dashboard = () => {
     event.preventDefault();
     try {
       const isEthereumAddress = /^(0x)?[0-9a-fA-F]{40}$/.test(referrerId);
-
-      let total = Number(registration_Free) + Number(pool1_price);
-      let amount = web3.utils.toWei(total.toString(), "ether"); // registration_Free; //web3.utils.toWei(amount, "ether")).toFixed(2) / 10000000000000000;
-
+      let total =
+        Number(registration_Free) + Number((registration_Free * taxRate) / 100);
+      let amount = web3.utils.toWei(total.toString(), "ether");
       let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
       let USDT_ = new web3.eth.Contract(USDT.ABI, USDT.address);
       let isAllowance = await USDT_.methods
@@ -508,7 +417,33 @@ const Dashboard = () => {
     event.preventDefault();
     try {
       let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
-      await FPrint_.methods.upgradePool2().send({ from: account });
+      let amount =
+        Number(pool2_price) + (Number(pool2_price) * Number(taxRate)) / 100;
+      // require(total >= pool2_price + (pool2_price * taxRate / 100), "pool1 income is less" );
+
+      setLoading(true);
+      let USDT_ = new web3.eth.Contract(USDT.ABI, USDT.address);
+
+      await USDT_.methods
+        .approve(FPrint.address, amount)
+        .send({ from: account })
+        .on("receipt", async function (receipt) {
+          setLoading(false);
+
+          let reg_user = await FPrint_.methods
+            .upgradePool2(amount)
+            .send({ from: account });
+          console.log("****** native coin accepting condtion", reg_user);
+          if (reg_user.status) {
+            alert("Registerd Success");
+          } else {
+            alert("Registerd Failed !!!!");
+          }
+        })
+        .on("error", function (error, receipt) {
+          // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
+          setLoading(false);
+        });
     } catch (e) {
       alert("Error is catched");
     }
@@ -517,84 +452,41 @@ const Dashboard = () => {
     event.preventDefault();
     try {
       let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
-      await FPrint_.methods.upgradePool3().send({ from: account });
-    } catch (e) {
-      alert("Error is catched");
-    }
-  };
-  const handleSubmitIUpdatePool4 = async (event) => {
-    event.preventDefault();
-    try {
-      let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
-      await FPrint_.methods.upgradePool4().send({ from: account });
-    } catch (e) {
-      alert("Error is catched");
-    }
-  };
-  const handleSubmitIUpdatePool5 = async (event) => {
-    event.preventDefault();
-    try {
-      let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
-      await FPrint_.methods.upgradePool5().send({ from: account });
-    } catch (e) {
-      alert("Error is catched");
-    }
-  };
-  const handleSubmitIWithdrawPool1 = async (event) => {
-    event.preventDefault();
-    try {
-      let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
-      await FPrint_.methods.withdrawPool1Income().send({ from: account });
+
+      let amount =
+        Number(pool3_price) + (Number(pool3_price) * Number(taxRate)) / 100;
+      // require(total >= pool2_price + (pool2_price * taxRate / 100), "pool1 income is less" );
+
+      setLoading(true);
+      let USDT_ = new web3.eth.Contract(USDT.ABI, USDT.address);
+
+      await USDT_.methods
+        .approve(FPrint.address, amount)
+        .send({ from: account })
+        .on("receipt", async function (receipt) {
+          setLoading(false);
+
+          let reg_user = await FPrint_.methods
+            .upgradePool3(amount)
+            .send({ from: account });
+          console.log("****** native coin accepting condtion", reg_user);
+          if (reg_user.status) {
+            alert("Registerd Success");
+          } else {
+            alert("Registerd Failed !!!!");
+          }
+        })
+        .on("error", function (error, receipt) {
+          // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
+          setLoading(false);
+        });
+
+      // await FPrint_.methods.upgradePool3().send({ from: account });
     } catch (e) {
       alert("Error is catched");
     }
   };
 
-  const handleSubmitIWithdrawPool2 = async (event) => {
-    event.preventDefault();
-    try {
-      let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
-      await FPrint_.methods.withdrawPool2Income().send({ from: account });
-    } catch (e) {
-      alert("Error is catched");
-    }
-  };
-
-  const handleSubmitIWithdrawPool3 = async (event) => {
-    event.preventDefault();
-    try {
-      let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
-      await FPrint_.methods.withdrawPool3Income().send({ from: account });
-    } catch (e) {
-      alert("Error is catched");
-    }
-  };
-
-  const handleSubmitIWithdrawPool4 = async (event) => {
-    event.preventDefault();
-    try {
-      let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
-      await FPrint_.methods.withdrawPool4Income().send({ from: account });
-    } catch (e) {
-      alert("Error is catched");
-    }
-  };
-  const handleSubmitIWithdrawPool5 = async (event) => {
-    event.preventDefault();
-    try {
-      let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
-      await FPrint_.methods.withdrawPool5Income().send({ from: account });
-    } catch (e) {
-      alert("Error is catched");
-    }
-  };
-  const poolTitle = pool4Exist
-    ? "Update Pool 4"
-    : pool3Exist
-    ? "Update Pool 4"
-    : pool2Exist
-    ? "Update Pool 3"
-    : "Update Pool 2";
   return (
     <div className="home-container">
       <div className="card-container container1">
@@ -684,7 +576,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body-id">
-                <h5>Marked community</h5>
+                <h5>Staked User ID</h5>
                 <h4 className="mb-0">
                   {registerCurrentUserId ? registerCurrentUserId : 0}
                 </h4>
@@ -695,7 +587,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body-id">
-                <h5>Current community</h5>
+                <h5>Current User ID FP</h5>
                 <h4 className="mb-0">{currentId ? currentId : 0}</h4>
               </div>
             </div>
@@ -705,7 +597,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body-price">
-                <h5>Current Token Price</h5>
+                <h5>Token Price</h5>
                 <h4 className="mb-0">
                   {registerTokenPrice ? registerTokenPrice : 0}
                 </h4>
@@ -717,7 +609,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body-price">
-                <h5>Marked Token Price</h5>
+                <h5>Register Price</h5>
                 <h4 className="mb-0">{registerPrice ? registerPrice : 0}</h4>
               </div>
             </div>
@@ -727,7 +619,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body-time">
-                <h5>Marked on</h5>
+                <h5>Register Time</h5>
                 <h4 className="mb-0">
                   {registerTimeStamp ? registerTimeStamp : "00/00/00"}
                 </h4>
@@ -738,7 +630,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body-time">
-                <h5>Current date</h5>
+                <h5>Current Time</h5>
                 <h4 className="mb-0">
                   {currentDateEpoch ? currentDateEpoch : 0}
                 </h4>
@@ -883,30 +775,6 @@ const Dashboard = () => {
                           className="btn mt-3 submitbtn_"
                           type="submit"
                           value="Update Pool"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
-            <div className="card">
-              <div className="card-body-reg">
-                <h5>Withdraw Pool1 Income</h5>
-                <div className="row">
-                  <div className="col-sm-12 my-auto">
-                    <form
-                      className="forms-sample"
-                      onSubmit={handleSubmitIWithdrawPool1}
-                    >
-                      <div className="form-group w-100">
-                        <input
-                          className="btn mt-3 submitbtn_"
-                          type="submit"
-                          value="Withdraw Pool1"
                         />
                       </div>
                     </form>
@@ -1083,29 +951,6 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
-            <div className="card">
-              <div className="card-body-reg">
-                <h5>Withdraw Pool2 Income</h5>
-                <div className="row">
-                  <div className="col-sm-12 my-auto">
-                    <form
-                      className="forms-sample"
-                      onSubmit={handleSubmitIWithdrawPool2}
-                    >
-                      <div className="form-group w-100">
-                        <input
-                          className="btn mt-3 submitbtn_"
-                          type="submit"
-                          value="Withdraw Pool2"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -1225,366 +1070,6 @@ const Dashboard = () => {
                 <h4 className="mb-0">
                   {partnerPool3Recieved ? partnerPool3Recieved : 0}
                 </h4>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
-            <div className="card">
-              <div className="card-body-reg">
-                <h5>Upgrade Pool4</h5>
-                <div className="row">
-                  <div className="col-sm-12 my-auto">
-                    <form
-                      className="forms-sample"
-                      onSubmit={handleSubmitIUpdatePool4}
-                    >
-                      <div className="form-group w-100">
-                        <input
-                          className="btn mt-3 submitbtn_"
-                          type="submit"
-                          value="Update Pool"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
-            <div className="card">
-              <div className="card-body-reg">
-                <h5>Withdraw Pool3 Income</h5>
-                <div className="row">
-                  <div className="col-sm-12 my-auto">
-                    <form
-                      className="forms-sample"
-                      onSubmit={handleSubmitIWithdrawPool3}
-                    >
-                      <div className="form-group w-100">
-                        <input
-                          className="btn mt-3 submitbtn_"
-                          type="submit"
-                          value="Withdraw Pool3"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Pool 4 Row Container */}
-      <div className="card-container container5">
-        <div className="col-sm-12 grid-margin">
-          <div className="card">
-            <div className="card-body text-center">Pool4 Value</div>
-          </div>
-        </div>
-        <div className="row">
-          {/* pool1_price */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Pool4 Price</h5>
-                <h4 className="mb-0">{pool4_price ? pool4_price : 0} USDT</h4>
-              </div>
-            </div>
-          </div>
-
-          {/* pool1activeUserID */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Pool4 Active User ID</h5>
-                <h4 className="mb-0">
-                  {pool4activeUserID ? pool4activeUserID : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-
-          {/* pool1currUserID */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Pool4 Current User ID</h5>
-                <h4 className="mb-0">
-                  {pool4currUserID ? pool4currUserID : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-
-          {/*  User ID */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Users ID</h5>
-                <h4 className="mb-0">{pool4Id ? pool4Id : 0}</h4>
-              </div>
-            </div>
-          </div>
-
-          {/* Payment Received  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Payment Received</h5>
-                <h4 className="mb-0">
-                  {pool1PaymentReceived ? pool1PaymentReceived : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-
-          {/* Pool Income  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Pool Income</h5>
-                <h4 className="mb-0">{pool4Income ? pool4Income : 0}</h4>
-              </div>
-            </div>
-          </div>
-          {/* Income USed  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Income Used</h5>
-                <h4 className="mb-0">
-                  {pool4UsedIncome ? pool4UsedIncome : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-
-          {/* Income Balance  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Income Balance</h5>
-                <h4 className="mb-0">
-                  {pool4IncomeBalance ? pool4IncomeBalance : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-          {/* PartnerPoolRecieved   */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> partnerPool4Recieved</h5>
-                <h4 className="mb-0">
-                  {partnerPool4Recieved ? partnerPool4Recieved : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-
-          {/* SponsorPoolRecieved  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Sponsor Pool Recieved</h5>
-                <h4 className="mb-0">
-                  {sponsorPool4Recieved ? sponsorPool4Recieved : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
-            <div className="card">
-              <div className="card-body-reg">
-                <h5>Upgrade Pool5</h5>
-                <div className="row">
-                  <div className="col-sm-12 my-auto">
-                    <form
-                      className="forms-sample"
-                      onSubmit={handleSubmitIUpdatePool5}
-                    >
-                      <div className="form-group w-100">
-                        <input
-                          className="btn mt-3 submitbtn_"
-                          type="submit"
-                          value="Update Pool"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
-            <div className="card">
-              <div className="card-body-reg">
-                <h5>Withdraw Pool4 Income</h5>
-                <div className="row">
-                  <div className="col-sm-12 my-auto">
-                    <form
-                      className="forms-sample"
-                      onSubmit={handleSubmitIWithdrawPool4}
-                    >
-                      <div className="form-group w-100">
-                        <input
-                          className="btn mt-3 submitbtn_"
-                          type="submit"
-                          value="Withdraw Pool4"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Pool 5 Row Container */}
-      <div className="card-container container5">
-        <div className="col-sm-12 grid-margin">
-          <div className="card">
-            <div className="card-body text-center">Pool5 Value</div>
-          </div>
-        </div>
-        <div className="row">
-          {/* pool1_price */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Pool5 Price</h5>
-                <h4 className="mb-0">{pool5_price ? pool5_price : 0} USDT</h4>
-              </div>
-            </div>
-          </div>
-
-          {/* pool1activeUserID */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Pool5 Active User ID</h5>
-                <h4 className="mb-0">
-                  {pool5activeUserID ? pool5activeUserID : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-
-          {/* pool1currUserID */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Pool5 Current User ID</h5>
-                <h4 className="mb-0">
-                  {pool5currUserID ? pool5currUserID : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-
-          {/*  User ID */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Users ID</h5>
-                <h4 className="mb-0">{pool5Id ? pool5Id : 0}</h4>
-              </div>
-            </div>
-          </div>
-
-          {/* Payment Received  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Payment Received</h5>
-                <h4 className="mb-0">
-                  {pool5PaymentReceived ? pool5PaymentReceived : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-
-          {/* Pool Income  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Pool Income</h5>
-                <h4 className="mb-0">{pool5Income ? pool5Income : 0}</h4>
-              </div>
-            </div>
-          </div>
-          {/* Income USed  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Income Used</h5>
-                <h4 className="mb-0">
-                  {pool5UsedIncome ? pool5UsedIncome : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-
-          {/* Income Balance  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Income Balance</h5>
-                <h4 className="mb-0">
-                  {pool5IncomeBalance ? pool5IncomeBalance : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-          {/* PartnerPoolRecieved   */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> partnerPool5Recieved</h5>
-                <h4 className="mb-0">
-                  {partnerPool5Recieved ? partnerPool5Recieved : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-
-          {/* SponsorPoolRecieved  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Sponsor Pool Recieved</h5>
-                <h4 className="mb-0">
-                  {sponsorPool5Recieved ? sponsorPool5Recieved : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
-            <div className="card">
-              <div className="card-body-reg">
-                <h5>Withdraw Pool5 Income</h5>
-                <div className="row">
-                  <div className="col-sm-12 my-auto">
-                    <form
-                      className="forms-sample"
-                      onSubmit={handleSubmitIWithdrawPool5}
-                    >
-                      <div className="form-group w-100">
-                        <input
-                          className="btn mt-3 submitbtn_"
-                          type="submit"
-                          value="Withdraw Pool5"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
