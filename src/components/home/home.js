@@ -348,74 +348,70 @@ const Dashboard = () => {
     setIdentity(event.target.value);
   };
   // Registration  Write function Called
- const handleSubmitRegistration = async (event) => {
-  event.preventDefault();
-  try {
-    const isEthereumAddress = /^(0x)?[0-9a-fA-F]{40}$/.test(referrerId);
+  const handleSubmitRegistration = async (event) => {
+    event.preventDefault();
+    try {
+      const isEthereumAddress = /^(0x)?[0-9a-fA-F]{40}$/.test(referrerId);
+      let total =
+        Number(registration_Free) + Number((registration_Free * taxRate) / 100);
+      let amount = web3.utils.toWei(total.toString(), "ether");
+      let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
+      let USDT_ = new web3.eth.Contract(USDT.ABI, USDT.address);
+      let isAllowance = await USDT_.methods
+        .allowance(account, FPrint.address)
+        .call();
+      let isApprove, reg_user;
+      if (isAllowance < amount) {
+        setLoading(true);
 
-    // Log input values for debugging
-    console.log("registration_Free:", registration_Free);
-    console.log("taxRate:", taxRate);
-
-    // Convert input values to numbers using parseFloat
-    let parsedRegistrationFree = parseFloat(registration_Free);
-    let parsedTaxRate = parseFloat(taxRate);
-
-    // Log parsed values for debugging
-    console.log("parsedRegistrationFree:", parsedRegistrationFree);
-    console.log("parsedTaxRate:", parsedTaxRate);
-
-    // Check if the conversion was successful
-    if (isNaN(parsedRegistrationFree) || isNaN(parsedTaxRate)) {
-      throw new Error("Invalid input values");
-    }
-
-    let total = parsedRegistrationFree + (parsedRegistrationFree * parsedTaxRate) / 100;
-    let amount = web3.utils.toWei(total.toString(), "ether");
-    let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
-    let USDT_ = new web3.eth.Contract(USDT.ABI, USDT.address);
-        let isAllowance = await USDT_.methods.allowance(account, FPrint.address).call();
-
-        if (isAllowance < amount) {
-            setLoading(true);
-
-            await USDT_.methods.approve(FPrint.address, amount).send({ from: account });
-
+        isApprove = await USDT_.methods
+          .approve(FPrint.address, amount)
+          .send({ from: account })
+          .on("receipt", async function (receipt) {
             setLoading(false);
-
-            let reg_user;
             if (!isEthereumAddress) {
-                reg_user = await FPrint_.methods.Registration(referrerId, coReferrerId, amount, identity).send({ from: account, value: 0 });
+              reg_user = await FPrint_.methods
+                .Registration(referrerId, coReferrerId, amount, identity)
+                .send({ from: account, value: 0 });
             } else {
-                reg_user = await FPrint_.methods.Registration2(referrerId, coReferrerId, amount, identity).send({ from: account, value: 0 });
+              reg_user = await FPrint_.methods
+                .Registration2(referrerId, coReferrerId, amount, identity)
+                .send({ from: account, value: 0 });
             }
 
-            console.log("****** native coin accepting condition", reg_user);
+            console.log("****** native coin accepting condtion", reg_user);
             if (reg_user.status) {
-                alert("Registered Success");
+              alert("Registerd Success");
             } else {
-                alert("Registration Failed !!!!");
+              alert("Registerd Failed !!!!");
             }
+          })
+          .on("error", function (error, receipt) {
+            // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
+            setLoading(false);
+          });
+      } else {
+        if (!isEthereumAddress) {
+          reg_user = await FPrint_.methods
+            .Registration(referrerId, coReferrerId, amount, identity)
+            .send({ from: account, value: 0 });
         } else {
-            let reg_user;
-            if (!isEthereumAddress) {
-                reg_user = await FPrint_.methods.Registration(referrerId, coReferrerId, amount, identity).send({ from: account, value: 0 });
-            } else {
-                reg_user = await FPrint_.methods.Registration2(referrerId, coReferrerId, amount, identity).send({ from: account, value: 0 });
-            }
-
-            console.log("****** native coin accepting condition", reg_user);
-            if (reg_user.status) {
-                alert("Registered Success");
-            } else {
-                alert("Registration Failed !!!!");
-            }
+          reg_user = await FPrint_.methods
+            .Registration2(referrerId, coReferrerId, amount, identity)
+            .send({ from: account, value: 0 });
         }
+        console.log("****** native coin accepting condtion", reg_user);
+        if (reg_user.status) {
+          alert("Registerd Success");
+        } else {
+          alert("Registerd Failed !!!!");
+        }
+      }
     } catch (e) {
-        console.log("Error: ", e);
-        alert("Error is caught: " + e.message);
+      console.log("Error: ", e);
+      alert("Error is catched", e);
     }
-};
+  };
 
   const handleSubmitIUpdatePool2 = async (event) => {
     event.preventDefault();
