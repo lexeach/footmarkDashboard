@@ -353,9 +353,17 @@ const Dashboard = () => {
   try {
     const isEthereumAddress = /^(0x)?[0-9a-fA-F]{40}$/.test(referrerId);
 
+    // Log input values for debugging
+    console.log("registration_Free:", registration_Free);
+    console.log("taxRate:", taxRate);
+
     // Convert input values to numbers using parseFloat
     let parsedRegistrationFree = parseFloat(registration_Free);
     let parsedTaxRate = parseFloat(taxRate);
+
+    // Log parsed values for debugging
+    console.log("parsedRegistrationFree:", parsedRegistrationFree);
+    console.log("parsedTaxRate:", parsedTaxRate);
 
     // Check if the conversion was successful
     if (isNaN(parsedRegistrationFree) || isNaN(parsedTaxRate)) {
