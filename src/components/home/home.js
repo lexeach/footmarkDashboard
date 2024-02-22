@@ -354,18 +354,18 @@ const Dashboard = () => {
     const isEthereumAddress = /^(0x)?[0-9a-fA-F]{40}$/.test(referrerId);
 
     // Convert input values to numbers using parseFloat
-    let total =
-      parseFloat(registration_Free) + parseFloat((parseFloat(registration_Free) * taxRate) / 100);
+    let parsedRegistrationFree = parseFloat(registration_Free);
+    let parsedTaxRate = parseFloat(taxRate);
 
-    // Check if total is a valid number
-    if (isNaN(total)) {
+    // Check if the conversion was successful
+    if (isNaN(parsedRegistrationFree) || isNaN(parsedTaxRate)) {
       throw new Error("Invalid input values");
     }
 
+    let total = parsedRegistrationFree + (parsedRegistrationFree * parsedTaxRate) / 100;
     let amount = web3.utils.toWei(total.toString(), "ether");
     let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
     let USDT_ = new web3.eth.Contract(USDT.ABI, USDT.address);
-
         let isAllowance = await USDT_.methods.allowance(account, FPrint.address).call();
 
         if (isAllowance < amount) {
