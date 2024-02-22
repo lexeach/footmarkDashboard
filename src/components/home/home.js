@@ -349,13 +349,23 @@ const Dashboard = () => {
   };
   // Registration  Write function Called
  const handleSubmitRegistration = async (event) => {
-    event.preventDefault();
-    try {
-        const isEthereumAddress = /^(0x)?[0-9a-fA-F]{40}$/.test(referrerId);
-        let total = Number(registration_Free) + Number((registration_Free * taxRate) / 100);
-        let amount = web3.utils.toWei(total.toString(), "ether");
-        let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
-        let USDT_ = new web3.eth.Contract(USDT.ABI, USDT.address);
+  event.preventDefault();
+  try {
+    const isEthereumAddress = /^(0x)?[0-9a-fA-F]{40}$/.test(referrerId);
+
+    // Convert input values to numbers using parseFloat
+    let total =
+      parseFloat(registration_Free) + parseFloat((parseFloat(registration_Free) * taxRate) / 100);
+
+    // Check if total is a valid number
+    if (isNaN(total)) {
+      throw new Error("Invalid input values");
+    }
+
+    let amount = web3.utils.toWei(total.toString(), "ether");
+    let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
+    let USDT_ = new web3.eth.Contract(USDT.ABI, USDT.address);
+
         let isAllowance = await USDT_.methods.allowance(account, FPrint.address).call();
 
         if (isAllowance < amount) {
