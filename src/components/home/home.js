@@ -354,7 +354,7 @@ const Dashboard = () => {
       const isEthereumAddress = /^(0x)?[0-9a-fA-F]{40}$/.test(referrerId);
       let total = (Number(registration_Free) + (Number(registration_Free) * Number(taxRate) / 100));
       //value_ = (Number(value_) + (Number(value_) * Number(tax) / 100)).toString();
-      let amount = total.toString();
+      amount = total.toString();
       let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
       let USDT_ = new web3.eth.Contract(USDT.ABI, USDT.address);
       let isAllowance = await USDT_.methods
