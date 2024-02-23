@@ -355,6 +355,11 @@ const Dashboard = () => {
       let total =
         Number(registration_Free) + Number((registration_Free * taxRate) / 100);
       let amount = web3.utils.toWei(total.toString(), "ether");
+
+      amount = Number(amount).toString();
+      amount = await scientificToInteger(amount);
+
+      
       let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
       let USDT_ = new web3.eth.Contract(USDT.ABI, USDT.address);
       let isAllowance = await USDT_.methods
