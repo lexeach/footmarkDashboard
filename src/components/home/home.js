@@ -351,14 +351,15 @@ const Dashboard = () => {
   const handleSubmitRegistration = async (event) => {
     event.preventDefault();
     try {
-      const isEthereumAddress = /^(0x)?[0-9a-fA-F]{40}$/.test(referrerId);
-      let total =
-        Number(registration_Free) + Number((registration_Free * taxRate) / 100);
-      let amount = web3.utils.toWei(total.toString(), "ether");
-
-      amount = Number(amount).toString();
-      amount = await scientificToInteger(amount);
-
+      setLoading(true);
+      console.log("Loading set true: ", loading);
+      const accounts = await web3.eth.requestAccounts();
+      let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
+      console.log("accoutn", account);
+      let amount = await ICU_.methods.REGESTRATION_FESS().call();
+      amount = (Number(value_) * 10).toString();
+      //amount = await scientificToInteger(amount);
+      
       
       let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
       let USDT_ = new web3.eth.Contract(USDT.ABI, USDT.address);
