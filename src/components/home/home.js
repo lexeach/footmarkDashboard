@@ -356,7 +356,7 @@ const Dashboard = () => {
       const accounts = await web3.eth.requestAccounts();
       let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
       console.log("accoutn", account);
-      let amount = await ICU_.methods.REGESTRATION_FESS().call();
+      let amount = await FPrint_.methods.REGESTRATION_FESS().call();
       amount = (Number(value_) * 10).toString();
       //amount = await scientificToInteger(amount);
       
