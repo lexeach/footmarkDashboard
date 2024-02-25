@@ -419,11 +419,15 @@ const Dashboard = () => {
     event.preventDefault();
     try {
       let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
-      
-      
-      
-      let total = Number(pool2_price) + (Number(pool2_price) * Number(taxRate)) / 100);
-      let amount = web3.utils.toWei(total.toString(), "ether");
+      console.log("Tax Rate is :", taxRate);
+      let amount = web3.utils.toWei(
+        Number(pool2_price) + (Number(pool2_price) * Number(taxRate)) / 100,
+        "wei"
+      );
+      console.log("Amount : ", amount);
+      // require(total >= pool2_price + (pool2_price * taxRate / 100), "pool1 income is less" );
+
+      setLoading(true);
       let USDT_ = new web3.eth.Contract(USDT.ABI, USDT.address);
 
       await USDT_.methods
