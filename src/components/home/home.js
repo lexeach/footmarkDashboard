@@ -701,27 +701,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Pool Income  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Pool Income</h5>
-                <h4 className="mb-0">{pool1Income ? pool1Income : 0}</h4>
-              </div>
-            </div>
-          </div>
-          {/* Income USed  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Income Used</h5>
-                <h4 className="mb-0">
-                  {pool1UsedIncome ? pool1UsedIncome : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-
+          
           {/* Income Balance  */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
@@ -847,27 +827,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Pool Income  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Pool Income</h5>
-                <h4 className="mb-0">{pool2Income ? pool2Income : 0}</h4>
-              </div>
-            </div>
-          </div>
-          {/* Income USed  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Income Used</h5>
-                <h4 className="mb-0">
-                  {pool2UsedIncome ? pool2UsedIncome : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-
+          
           {/* Income Balance  */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
@@ -875,28 +835,6 @@ const Dashboard = () => {
                 <h5> Income Balance</h5>
                 <h4 className="mb-0">
                   {pool2IncomeBalance ? pool2IncomeBalance : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-          {/* PartnerPoolRecieved   */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Partner Pool Recieved</h5>
-                <h4 className="mb-0">
-                  {partnerPool2Recieved ? partnerPool2Recieved : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-          {/* SponsorPoolRecieved  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Sponsor Pool Recieved </h5>
-                <h4 className="mb-0">
-                  {sponsorPool2Recieved ? sponsorPool2Recieved : 0}
                 </h4>
               </div>
             </div>
