@@ -539,16 +539,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* User Win Amount  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Win Amount</h5>
-                <h4 className="mb-0">{winAmount ? winAmount : 0}</h4>
-              </div>
-            </div>
-          </div>
-
+        
           {/* income */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
