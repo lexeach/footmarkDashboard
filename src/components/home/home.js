@@ -239,12 +239,12 @@ const Dashboard = () => {
       setPartnerPool2Recieved(
         Number(
           web3.utils.fromWei(pool2userss.PartnerPoolRecieved, "ether")
-        ).toFixed(4)
+        ).toFixed(0)
       );
       setSponsorPool2Recieved(
         Number(
           web3.utils.fromWei(pool2userss.SponsorPoolRecieved, "ether")
-        ).toFixed(4)
+        ).toFixed(0)
       );
 
       let pool3Price = await NEW_CBC_ROI.methods.pool3_price().call();
