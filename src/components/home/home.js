@@ -977,13 +977,13 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* PartnerPoolRecieved   */}
+          {/* SponsorPoolRecieved   */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body">
-                <h5> Partner Pool Recieved </h5>
+                <h5> Sponsor Pool Recieved </h5>
                 <h4 className="mb-0">
-                  {partnerPool3Recieved ? partnerPool3Recieved : 0}
+                  {sponsorPool3Recieved ? sponsorPool3Recieved : 0}
                 </h4>
               </div>
             </div>
