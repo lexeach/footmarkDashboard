@@ -953,27 +953,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Pool Income  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Pool Income</h5>
-                <h4 className="mb-0">{pool3Income ? pool3Income : 0}</h4>
-              </div>
-            </div>
-          </div>
-          {/* Income USed  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Income Used</h5>
-                <h4 className="mb-0">
-                  {pool3UsedIncome ? pool3UsedIncome : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-
+         
           {/* Income Balance  */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
