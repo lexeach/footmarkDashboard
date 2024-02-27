@@ -96,7 +96,7 @@ const Dashboard = () => {
       let tokenPrices = await ICO_.methods.tokenPrice().call();
       let incomes = await NEW_CBC_ROI.methods.income(accounts[0]).call();
 
-      setIncome(Number(web3.utils.fromWei(incomes.income, "ether")).toFixed(4));
+      setIncome(Number(web3.utils.fromWei(incomes.income, "ether")).toFixed(0));
       setPlaner(incomes.planer);
 
       let registers = await NEW_CBC_ROI.methods.register(accounts[0]).call();
@@ -149,18 +149,18 @@ const Dashboard = () => {
       setPool1PaymentReceived(
         Number(
           web3.utils.fromWei(pool1userss.payment_received, "ether")
-        ).toFixed(4)
+        ).toFixed(0)
       );
 
       setPartnerPool1Recieved(
         Number(
           web3.utils.fromWei(pool1userss.PartnerPoolRecieved, "ether")
-        ).toFixed(4)
+        ).toFixed(0)
       );
       setSponsorPool1Recieved(
         Number(
           web3.utils.fromWei(pool1userss.SponsorPoolRecieved, "ether")
-        ).toFixed(4)
+        ).toFixed(0)
       );
       setPool1Income(
         Number(
@@ -269,17 +269,17 @@ const Dashboard = () => {
       setPool3PaymentReceived(
         Number(
           web3.utils.fromWei(pool3userss.payment_received, "ether")
-        ).toFixed(4)
+        ).toFixed(0)
       );
       setPartnerPool3Recieved(
         Number(
           web3.utils.fromWei(pool3userss.PartnerPoolRecieved, "ether")
-        ).toFixed(4)
+        ).toFixed(0)
       );
       setSponsorPool3Recieved(
         Number(
           web3.utils.fromWei(pool2userss.SponsorPoolRecieved, "ether")
-        ).toFixed(4)
+        ).toFixed(0)
       );
       setPool3Income(
         Number(
