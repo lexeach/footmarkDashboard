@@ -122,7 +122,7 @@ const Dashboard = () => {
       setRegisterLevelIncomeReceived(
         Number(
           web3.utils.fromWei(registers.levelIncomeReceived, "ether")
-        ).toFixed(4)
+        ).toFixed(0)
       );
       setRegisterReferredUsers(registers.referredUsers);
 
