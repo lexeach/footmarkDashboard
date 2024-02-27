@@ -421,6 +421,7 @@ const Dashboard = () => {
       let total = Number(pool2_price) + Number((pool2_price * taxRate) / 100);
       let amount = web3.utils.toWei(total.toString(), "ether");
       let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
+      setLoading(true);
       let USDT_ = new web3.eth.Contract(USDT.ABI, USDT.address);
 
       await USDT_.methods
