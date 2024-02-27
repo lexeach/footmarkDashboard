@@ -701,7 +701,27 @@ const Dashboard = () => {
             </div>
           </div>
 
-          
+          {/* Pool Income  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5>Pool Income</h5>
+                <h4 className="mb-0">{pool1Income ? pool1Income : 0}</h4>
+              </div>
+            </div>
+          </div>
+          {/* Income USed  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> Income Used</h5>
+                <h4 className="mb-0">
+                  {pool1UsedIncome ? pool1UsedIncome : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+
           {/* Income Balance  */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
@@ -827,6 +847,26 @@ const Dashboard = () => {
             </div>
           </div>
 
+          {/* Pool Income  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5>Pool Income</h5>
+                <h4 className="mb-0">{pool2Income ? pool2Income : 0}</h4>
+              </div>
+            </div>
+          </div>
+          {/* Income USed  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> Income Used</h5>
+                <h4 className="mb-0">
+                  {pool2UsedIncome ? pool2UsedIncome : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
 
           {/* Income Balance  */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
@@ -861,7 +901,30 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-      
+          {/* Income PartnerPoolRecieved  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> PartnerPoolRecieved</h5>
+                <h4 className="mb-0">
+                  {partnerPool2Recieved ? partnerPool2Recieved : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+
+          {/* SponsorPoolRecieved  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> Sponsor Pool Recieved</h5>
+                <h4 className="mb-0">
+                  {sponsorPool2Recieved ? sponsorPool2Recieved : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+
           <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
             <div className="card">
               <div className="card-body-reg">
@@ -952,7 +1015,27 @@ const Dashboard = () => {
             </div>
           </div>
 
-        
+          {/* Pool Income  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5>Pool Income</h5>
+                <h4 className="mb-0">{pool3Income ? pool3Income : 0}</h4>
+              </div>
+            </div>
+          </div>
+          {/* Income USed  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5> Income Used</h5>
+                <h4 className="mb-0">
+                  {pool3UsedIncome ? pool3UsedIncome : 0}
+                </h4>
+              </div>
+            </div>
+          </div>
+
           {/* Income Balance  */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
@@ -976,17 +1059,19 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* SponsorPoolRecieved  */}
+          {/* PartnerPoolRecieved   */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body">
-                <h5> Sponsor Pool Recieved </h5>
+                <h5> Partner Pool Recieved </h5>
                 <h4 className="mb-0">
-                  {sponsorPool3Recieved ? sponsorPool3Recieved : 0}
+                  {partnerPool3Recieved ? partnerPool3Recieved : 0}
                 </h4>
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
       <div className="card-container container6">
         <div className="col-sm-12 grid-margin">
