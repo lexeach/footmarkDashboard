@@ -96,7 +96,7 @@ const Dashboard = () => {
       let tokenPrices = await ICO_.methods.tokenPrice().call();
       let incomes = await NEW_CBC_ROI.methods.income(accounts[0]).call();
 
-      setIncome(Number(web3.utils.fromWei(incomes.income, "ether")).toFixed(0));
+      setIncome(Number(web3.utils.fromWei(incomes.income, "ether")).toFixed(4));
       setPlaner(incomes.planer);
 
       let registers = await NEW_CBC_ROI.methods.register(accounts[0]).call();
