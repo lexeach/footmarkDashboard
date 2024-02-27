@@ -209,7 +209,7 @@ const Dashboard = () => {
       setPool2PaymentReceived(
         Number(
           web3.utils.fromWei(pool2userss.payment_received, "ether")
-        ).toFixed(4)
+        ).toFixed(0)
       );
       setPool2Income(
         Number(
