@@ -10,7 +10,6 @@ const Dashboard = () => {
   const [account, setAccount] = useState();
   const [registration_Free, setRegistrationFee] = useState();
   const [currentId, setCurrentId] = useState();
-  const [currentIdFP, setCurrentIdFP] = useState();
   const [income, setIncome] = useState();
   const [planer, setPlaner] = useState();
   const [registerTimeStamp, setRegisterTimeStamp] = useState();
@@ -93,8 +92,6 @@ const Dashboard = () => {
       // set Last TopUp:  Current Id of ICO
       let currentID = await ICO_.methods.currUserID().call();
       setCurrentId(currentID);
-      let currentIDFP = await INEW_CBC_ROI.methods.currUserID().call();
-      setCurrentIdFP(currentIDFP);
 
       let tokenPrices = await ICO_.methods.tokenPrice().call();
       let incomes = await NEW_CBC_ROI.methods.income(accounts[0]).call();
@@ -149,7 +146,11 @@ const Dashboard = () => {
         .call();
 
       setPool1Id(pool1userss.id);
-      setPool1PaymentReceived(pool1userss.payment_received);
+      setPool1PaymentReceived(
+        Number(
+          web3.utils.fromWei(pool1userss.payment_received, "ether")
+        ).toFixed(0)
+      );
 
       setPartnerPool1Recieved(
         Number(
@@ -722,17 +723,6 @@ const Dashboard = () => {
                 <h5>Sponsor Income Count</h5>
                 <h4 className="mb-0">
                   {sponsorPool1Recieved ? sponsorPool1Recieved : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
-            {/* currentuserID */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Total Users</h5>
-                <h4 className="mb-0">
-                  {currentIdFP ? currentIdFP : 0}
                 </h4>
               </div>
             </div>
