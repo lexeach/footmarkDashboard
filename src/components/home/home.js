@@ -146,16 +146,16 @@ const Dashboard = () => {
         .call();
 
       setPool1Id(pool1userss.id);
-      let pool1userss = await NEW_CBC_ROI.methods
-        .pool1users(accounts[0])
-        .call();
-      
-      setPool1PaymentReceived(pool1userss.payment_received);
+      setPool1PaymentReceived(
+        Number(
+          web3.utils.fromWei(pool1userss.payment_received, "ether")
+        ).toFixed(0)
+      );
 
       setPartnerPool1Recieved(
         Number(
           web3.utils.fromWei(pool1userss.PartnerPoolRecieved, "ether")
-        ).toFixed(4)
+        ).toFixed(0)
       );
       setSponsorPool1Recieved(
         Number(
