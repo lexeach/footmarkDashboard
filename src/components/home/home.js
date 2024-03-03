@@ -147,7 +147,7 @@ const Dashboard = () => {
 
       setPool1Id(pool1userss.id);
       
-      setPool1PaymentReceived(Number(pool1userss.payment_received));
+      setPool1PaymentReceived(pool1userss.payment_received);
 
       setPartnerPool1Recieved(
         Number(
