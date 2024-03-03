@@ -148,10 +148,7 @@ const Dashboard = () => {
       setPool1Id(pool1userss.id);
       
       setPool1PaymentReceived(
-        Number(
-          web3.utils.fromWei(pool1userss.payment_received)
-        ).toFixed(0)
-      );
+        Number(pool1userss.payment_received);
 
       setPartnerPool1Recieved(
         Number(
