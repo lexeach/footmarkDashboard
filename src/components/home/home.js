@@ -146,7 +146,7 @@ const Dashboard = () => {
         .call();
 
       setPool1Id(pool1userss.id);
-      console.log("pool1PaymentReceived:", pool1PaymentReceived);
+      console.log("pool1PaymentReceived:", setPool1PaymentReceived);
 
       setPool1PaymentReceived(
         Number(
