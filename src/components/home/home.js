@@ -146,23 +146,22 @@ const Dashboard = () => {
         .call();
 
       setPool1Id(pool1userss.id);
-      console.log("pool1PaymentReceived:", setPool1PaymentReceived);
-
+      
       setPool1PaymentReceived(
         Number(
           web3.utils.fromWei(pool1userss.payment_received, "ether")
-        ).toFixed(18)
+        ).toFixed(4)
       );
 
       setPartnerPool1Recieved(
         Number(
           web3.utils.fromWei(pool1userss.PartnerPoolRecieved, "ether")
-        ).toFixed(0)
+        ).toFixed(4)
       );
       setSponsorPool1Recieved(
         Number(
           web3.utils.fromWei(pool1userss.SponsorPoolRecieved, "ether")
-        ).toFixed(0)
+        ).toFixed(4)
       );
       setPool1Income(
         Number(
