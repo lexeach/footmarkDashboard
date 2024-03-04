@@ -728,17 +728,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          {/* Income USed  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5> Income Used</h5>
-                <h4 className="mb-0">
-                  {pool1UsedIncome ? pool1UsedIncome : 0}
-                </h4>
-              </div>
-            </div>
-          </div>
+          
           <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
             <div className="card">
               <div className="card-body-reg">
