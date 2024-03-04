@@ -146,6 +146,8 @@ const Dashboard = () => {
         .call();
 
       setPool1Id(pool1userss.id);
+      console.log("pool1PaymentReceived:", pool1PaymentReceived);
+
       setPool1PaymentReceived(
         Number(
           web3.utils.fromWei(pool1userss.payment_received, "ether")
