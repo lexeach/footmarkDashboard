@@ -34,6 +34,7 @@ const Dashboard = () => {
   const [currentDateEpoch, setCurrentDateEpoch] = useState();
   const [sponsorPool1Recieved, setSponsorPool1Recieved] = useState();
   const [partnerPool1Recieved, setPartnerPool1Recieved] = useState();
+  const [currentIdFP, setCurrentIdFP] = useState();
 
   const [pool2_price, setPool2_price] = useState();
   const [pool2activeUserID, setPool2activeUserID] = useState();
@@ -93,6 +94,10 @@ const Dashboard = () => {
       let currentID = await ICO_.methods.currUserID().call();
       setCurrentId(currentID);
 
+      let currentIDFP = await NEW_CBC_ROI.methods.currUserID().call();
+      setCurrentIdFP(currentIDFP);
+
+      
       let tokenPrices = await ICO_.methods.tokenPrice().call();
       let incomes = await NEW_CBC_ROI.methods.income(accounts[0]).call();
 
@@ -122,7 +127,7 @@ const Dashboard = () => {
       setRegisterLevelIncomeReceived(
         Number(
           web3.utils.fromWei(registers.levelIncomeReceived, "ether")
-        ).toFixed(0)
+        ).toFixed(4)
       );
       setRegisterReferredUsers(registers.referredUsers);
 
@@ -146,19 +151,10 @@ const Dashboard = () => {
         .call();
 
       setPool1Id(pool1userss.id);
-      
       setPool1PaymentReceived(pool1userss.payment_received);
 
-      setPartnerPool1Recieved(
-        Number(
-          web3.utils.fromWei(pool1userss.PartnerPoolRecieved, "ether")
-        ).toFixed(4)
-      );
-      setSponsorPool1Recieved(
-        Number(
-          web3.utils.fromWei(pool1userss.SponsorPoolRecieved, "ether")
-        ).toFixed(4)
-      );
+      setPartnerPool1Recieved(pool1userss.PartnerPoolRecieved);
+      setSponsorPool1Recieved(pool1userss.SponsorPoolRecieved);
       setPool1Income(
         Number(
           web3.utils.fromWei(
@@ -203,11 +199,7 @@ const Dashboard = () => {
         .call();
       setPool2Exist(pool2userss.isExist);
       setPool2Id(pool2userss.id);
-      setPool2PaymentReceived(
-        Number(
-          web3.utils.fromWei(pool2userss.payment_received, "ether")
-        ).toFixed(0)
-      );
+      setPool2PaymentReceived(pool2userss.payment_received);
       setPool2Income(
         Number(
           web3.utils.fromWei(
@@ -233,16 +225,8 @@ const Dashboard = () => {
           4
         )
       );
-      setPartnerPool2Recieved(
-        Number(
-          web3.utils.fromWei(pool2userss.PartnerPoolRecieved, "ether")
-        ).toFixed(0)
-      );
-      setSponsorPool2Recieved(
-        Number(
-          web3.utils.fromWei(pool2userss.SponsorPoolRecieved, "ether")
-        ).toFixed(0)
-      );
+      setPartnerPool2Recieved(pool2userss.PartnerPoolRecieved);
+      setSponsorPool2Recieved(pool2userss.SponsorPoolRecieved);
 
       let pool3Price = await NEW_CBC_ROI.methods.pool3_price().call();
       setPool3_price(
@@ -263,21 +247,9 @@ const Dashboard = () => {
 
       setPool3Exist(pool3userss.isExist);
       setPool3Id(pool3userss.id);
-      setPool3PaymentReceived(
-        Number(
-          web3.utils.fromWei(pool3userss.payment_received, "ether")
-        ).toFixed(0)
-      );
-      setPartnerPool3Recieved(
-        Number(
-          web3.utils.fromWei(pool3userss.PartnerPoolRecieved, "ether")
-        ).toFixed(0)
-      );
-      setSponsorPool3Recieved(
-        Number(
-          web3.utils.fromWei(pool2userss.SponsorPoolRecieved, "ether")
-        ).toFixed(0)
-      );
+      setPool3PaymentReceived(pool3userss.payment_received);
+      setPartnerPool3Recieved(pool3userss.PartnerPoolRecieved);
+      setSponsorPool3Recieved(pool3userss.SponsorPoolRecieved);
       setPool3Income(
         Number(
           web3.utils.fromWei(
@@ -453,7 +425,6 @@ const Dashboard = () => {
       let FPrint_ = new web3.eth.Contract(FPrint.ABI, FPrint.address);
       setLoading(true);
       let USDT_ = new web3.eth.Contract(USDT.ABI, USDT.address);
-
       await USDT_.methods
         .approve(FPrint.address, amount)
         .send({ from: account })
@@ -515,7 +486,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body">
-                <h5>Level Income Count  </h5>
+                <h5>Level Income Count</h5>
                 <h4 className="mb-0">
                   {registerLevelIncomeReceived
                     ? registerLevelIncomeReceived
@@ -536,7 +507,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-        
+          
           {/* income */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
@@ -689,12 +660,13 @@ const Dashboard = () => {
             </div>
           </div>
 
-          
+         
+         
           {/* Income Balance  */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body">
-                <h5> Income</h5>
+                <h5> Income </h5>
                 <h4 className="mb-0">
                   {pool1IncomeBalance ? pool1IncomeBalance : 0}
                 </h4>
@@ -724,7 +696,17 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          
+
+             {/* Pool1  Income  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5>Users Count</h5>
+                <h4 className="mb-0">{currentIdFP ? currentIdFP : 0}</h4>
+              </div>
+            </div>
+          </div>
+            
           <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
             <div className="card">
               <div className="card-body-reg">
@@ -820,14 +802,14 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body">
-                <h5> Income</h5>
+                <h5> Income </h5>
                 <h4 className="mb-0">
                   {pool2IncomeBalance ? pool2IncomeBalance : 0}
                 </h4>
               </div>
             </div>
           </div>
-          {/* Income PartnerPoolRecieved  */}
+          {/* PartnerPoolRecieved   */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body">
@@ -838,19 +820,18 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-
           {/* SponsorPoolRecieved  */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body">
-                <h5> Sponsor Income Count</h5>
+                <h5> Sponsor Income Count </h5>
                 <h4 className="mb-0">
                   {sponsorPool2Recieved ? sponsorPool2Recieved : 0}
                 </h4>
               </div>
             </div>
           </div>
-
+          
           <div className="col-sm-12 col-md-6 col-lg-6 grid-margin">
             <div className="card">
               <div className="card-body-reg">
@@ -923,7 +904,7 @@ const Dashboard = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body">
-                <h5> User ID</h5>
+                <h5> Users ID</h5>
                 <h4 className="mb-0">{pool3Id ? pool3Id : 0}</h4>
               </div>
             </div>
@@ -941,7 +922,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-         
+          
           {/* Income Balance  */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
@@ -965,13 +946,13 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* SponsorPoolRecieved   */}
+          {/* PartnerPoolRecieved   */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
               <div className="card-body">
                 <h5> Sponsor Income Count </h5>
                 <h4 className="mb-0">
-                  {sponsorPool3Recieved ? sponsorPool3Recieved : 0}
+                  {partnerPool3Recieved ? partnerPool3Recieved : 0}
                 </h4>
               </div>
             </div>
