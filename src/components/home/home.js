@@ -460,19 +460,20 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="row">
-                  {/* Registration Fee */}
+                 {/* Registration Amount */}
 <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
   <div className="card">
     <div className="card-body">
       <h5>Registration Amount</h5>
       <h4 className="mb-0">
         {registration_Free && pool1_price
-          ? (parseFloat(registration_Free) + parseFloat(pool1_price) + ((parseFloat(registration_Free) + parseFloat(pool1_price)) * parseFloat(taxRate) / 100).toFixed(2)
+          ? ((parseFloat(registration_Free) + parseFloat(pool1_price)) * 1.3).toFixed(2)
           : 0} USDT
       </h4>
     </div>
   </div>
 </div>
+
           {/* Registration Fee  */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
