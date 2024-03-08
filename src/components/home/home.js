@@ -158,9 +158,8 @@ const Dashboard = () => {
       setPool1Income(
         Number(
           web3.utils.fromWei(
-            (Number(pool1userss.usedIncome) + Number(pool1userss.balanceIncome)
-              ? Number(pool1userss.usedIncome) +
-                Number(pool1userss.balanceIncome)
+            (Number(RegistrationFee.convert_regfee) + Number(pool1Price.pool1Price)
+              ? Number(RegistrationFee.convert_regfee) + Number(pool1Price.pool1Price)
               : 0
             ).toString(),
             "ether"
@@ -461,6 +460,15 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="row">
+                   {/* Pool Income  */}
+          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <h5>Pool Income</h5>
+                <h4 className="mb-0">{pool1Income ? pool1Income : 0}</h4>
+              </div>
+            </div>
+          </div>
           {/* Registration Fee  */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
