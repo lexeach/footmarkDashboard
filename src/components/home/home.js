@@ -158,8 +158,8 @@ const Dashboard = () => {
       setPool1Income(
         Number(
           web3.utils.fromWei(
-            (Number(RegistrationFee.convert_regfee) + Number(pool1Price.pool1Price)
-              ? Number(RegistrationFee.convert_regfee) + Number(pool1Price.pool1Price)
+            (Number(ICO_.convert_regfee) + Number(NEW_CBC_ROI.pool1Price)
+              ? Number(ICO_.convert_regfee) + Number(NEW_CBC_ROI.pool1Price)
               : 0
             ).toString(),
             "ether"
