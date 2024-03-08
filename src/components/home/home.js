@@ -460,15 +460,19 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="row">
-                   {/* Pool Income  */}
-          <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <h5>Pool Income</h5>
-                <h4 className="mb-0">{pool1Income ? pool1Income : 0}</h4>
-              </div>
-            </div>
-          </div>
+                  {/* Registration Fee */}
+<div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
+  <div className="card">
+    <div className="card-body">
+      <h5>Registration Amount</h5>
+      <h4 className="mb-0">
+        {registration_Free && pool1_price
+          ? (parseFloat(registration_Free) + parseFloat(pool1_price)).toFixed(2)
+          : 0} USDT
+      </h4>
+    </div>
+  </div>
+</div>
           {/* Registration Fee  */}
           <div className="col-lg-4 col-md-6 col-sm-12 grid-margin">
             <div className="card">
